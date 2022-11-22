@@ -1,0 +1,39 @@
+<div class="row justify-content-center" >
+   
+      <div class="row align-items-center">
+        <!-- <div *ngIf="statfavirs==false">
+            <div class="alert alert-danger text-center" role="alert">
+                vous n'avez pas de favoris
+            </div>
+        </div> -->
+
+    <div class="col-xl-3 col-lg-4 col-md-6 col-sm-12" *ngFor="let f of favoris">
+        <!-- *ngFor="let f of favoris"> -->
+        <div class="job_grid border rounded "  >
+            <div class="position-absolute ab-left" >
+                <div class="position-absolute ab-left" >
+
+                    <a (click)="deletefavoris(f.id,token)"
+                        class="p-3 border circle d-flex align-items-center justify-content-center bg-whites text-gray">
+                        <i class="lni lni-heart-filled position-absolute snackbar-wishlist"   id="favoris"
+                      ></i></a>
+                </div>
+            </div>
+            <div class="position-absolute ab-right"><span
+                    class="medium bg-light-warning text-warning px-2 py-1 rounded"></span></div>
+            <div class="job_grid_thumb mb-3 pt-5 px-3">
+                <a href="job-detail.html" class="d-block text-center m-auto"><img src="assets/img/c-2.png"
+                        class="img-fluid" width="70" alt=""></a>
+            </div>
+            <div class="job_grid_caption text-center pb-5 px-3">
+                <h6 class="mb-0 lh-1 ft-medium medium"><a href="employer-detail.html" class="text-muted medium"></a>
+                </h6>
+                <h4 class="mb-0 ft-medium medium">
+                    <a [routerLink]="['/detailjob',favoris.idoffre]" class="text-dark fs-md">
+                        {{f.title_offre}}</a></h4>
+
+            </div>
+            
+        </div>
+    </div>
+</div>

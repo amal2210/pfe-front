@@ -1,0 +1,99 @@
+
+           <div class="bg-light py-1">
+            <div class="ht-30"></div>
+            
+            </div>
+            
+           
+<!----------------------------------monprofil -------------------->
+
+<div class="container">
+    <div class="row">
+        
+        <div class="col-xl-4 col-lg-8 col-md-8 col-sm-12">
+        
+            <div class="d-block border rounded bg-white text-center mfliud-bot mb-4">
+               
+                        <div class="cdt_author px-2 pt-5 pb-4">
+                            <div class="dash_auth_thumb circle p-1 border d-inline-flex mx-auto mb-2">
+                
+                                <img style="width:180px;height:160px;" class="img-fluid circle"
+                                    src="https://127.0.0.1:8000/uploads/{{logo}}" >
+                
+                
+                            </div></div>
+
+                            <div class="dash_caption mb-4">
+                                <h4 class="fs-lg ft-medium mb-0 lh-1">{{freelance_entreprise.nom_entreprise}}</h4>
+                                <span class="text-muted smalls"><i class="lni lni-map-marker mr-1"></i>{{freelance_entreprise.adresse}}</span>
+                            </div>
+                            <div class="jb-list-01-title px-2" >
+                                <h6> les offres en cours:</h6>
+                                <span class="mr-2 mb-2 d-inline-flex px-2 py-1 rounded theme-cl theme-bg-light"*ngFor="let o of freelance_entreprise.offres">{{o.titre}}</span>
+                                
+                            </div>
+                         
+                                
+                           
+                    
+                </div></div>
+            
+            <div class="col-xl-8">
+                <div class="row">
+                    <div class="bg-white rounded mb-4">
+                    <div class="py-2"></div>
+
+                    <h5 > Coordonnées </h5>
+                                <div class="other-details">
+                                    <div class="details ft-medium"><label class="text-muted">Type d'entreprise :</label><span class="text-dark">{{freelance_entreprise.type_entreprise}}</span></div>
+                                    <div class="details ft-medium"><label class="text-muted"> Secteur d'activité :</label><span class="text-dark">{{freelance_entreprise.secteur_activite}}</span></div>
+                                    <div class="details ft-medium"><label class="text-muted">Email :</label><span class="text-dark">{{user.email}}</span></div>
+                                    <div class="details ft-medium"><label class="text-muted">Télélphone :</label><span class="text-dark">{{freelance_entreprise.telephone}}</span></div>
+                                </div> 
+                </div></div>
+                <div class="row">
+                    
+            <div class="bg-white rounded mb-4">
+                <div class="jbd-01 px-3 py-4">
+                    <div class="jbd-details mb-4">
+                        <h5 class="ft-medium fs-md">Description de l'entreprise</h5>
+                        
+                        <p>{{freelance_entreprise.descrip}}</p>
+                    </div></div>
+                    
+                   
+                    
+                    
+                   
+                   
+                    
+                </div>
+
+                
+               </div>
+            
+        
+        </div>
+            
+        
+        
+       
+        
+    </div>
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

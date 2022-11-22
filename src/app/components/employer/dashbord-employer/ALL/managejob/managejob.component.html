@@ -1,0 +1,227 @@
+<div class="row">
+    <div class="colxl-12 col-lg-12 col-md-12">
+        <h1 class="ft-medium manage-job">Gérer mes offres</h1>
+
+    </div>
+</div>
+
+
+
+<div class="dashboard-widg-bar d-block">
+    <div class="row">
+        <div class="col-xl-8 col-lg-8 col-md-8 col-sm-12 text-center">
+            <div class="pagination">
+
+                <pagination-controls (pageChange)="p = $event"></pagination-controls>
+
+
+            </div>
+        </div>
+        <div class="col-xl-4 col-lg-4 col-md-4 col-sm-12">
+            <div class="search-inner">
+                <div class="filter-search-box px-4 pt-3 pb-0">
+                    <div class="form-group ">
+
+                        <input type="text" class="form-control" placeholder="chercher par titre"
+                            [(ngModel)]="managejob">
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <div class="row">
+        <div class="col-xl-12 col-lg-12 col-md-12">
+            <!-- <div class="d-flex align-items-center p-3 alert alert-danger">
+                Your listings will be automatically removed after 30 days.
+            </div> -->
+            <div class="mb-4 tbl-lg rounded overflow-hidden ">
+                <div class="table-responsive bg-white">
+                    <table class="table">
+                        <thead class="thead-dark">
+                            <tr>
+                                <th scope="col">Titre</th>
+                                <th scope="col">Spécialité </th>
+                                <th scope="col">Date de création</th>
+                                <th scope="col">Date d'expiration</th>
+
+                                <th scope="col">Action</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr
+                                *ngFor="let offre of offres|managejob:managejob|paginate: { itemsPerPage: 10, currentPage: p }">
+                                <td>
+                                    <div class="dash-title">
+                                        <h4 class="mb-0 ft-medium fs-sm"> {{offre.titre}}
+
+                                        </h4>
+                                    </div>
+                                </td>
+                                <td>
+                                    <div class="dash-filled">
+                                        {{offre.specialite}}</div>
+                                </td>
+                                <td>{{offre.date_creation }}</td>
+                                <td>{{offre.date_limite}}</td>
+
+
+                                <td>
+
+                                    <div class="dash-action">
+                                        <a href="javascript:void(0);"
+                                            class="p-2 circle text-info bg-light-info d-inline-flex align-items-center justify-content-center mr-1"
+                                            [routerLink]="['/detailjob',offre.id]">
+                                            <i class="lni lni-eye"></i></a>
+                                        <a
+                                            class="p-2 circle text-success bg-light-success d-inline-flex align-items-center justify-content-center"><i
+                                                class="lni lni-pencil" (click)="open(content,offre)"></i></a>
+
+                                        <a
+                                            class="p-2 circle text-danger bg-light-danger d-inline-flex align-items-center justify-content-center ml-1"><i
+                                                class="lni lni-trash-can" (click)="deleteoffre(offre.id)"></i></a>
+                                    </div>
+                                </td>
+                            </tr>
+
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+
+
+
+
+
+
+<ng-template #content let-modal>
+
+    <div class="modal-header">
+
+        <h4 class="modal-title" id="modal-basic-title"> Éditer une offre</h4>
+        <button type="button" class="btn btn-close" aria-label="Close" (click)="modal.dismiss('Cross click')"></button>
+    </div>
+    <div class="modal-body">
+        <div class="dashboard-widg-bar d-block">
+
+
+
+            <form [formGroup]="FormOffre">
+
+                <div class="row">
+
+                    <div class="col-xl-4">
+                        <div class="form-group">
+                            <label class="text-dark ft-medium">Titre
+                            </label>
+                            <input type="text" class="form-control rounded" placeholder="Title" formControlName="titre">
+
+                        </div>
+                    </div>
+                    <div class="col-xl-4">
+                        <div class="form-group">
+                            <label class="text-dark ft-medium">Prix
+                            </label>
+                            <input class="form-control rounded" formControlName="prix">
+
+
+                        </div>
+                    </div>
+                    <div class="col-xl-4 ">
+                        <div class="form-group">
+                            <label class="text-dark ft-medium">Date d'expiration
+                            </label>
+                            <input type="text" class="form-control rounded" formControlName="date_limite"
+                                placeholder="dd-mm-yyyy">
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-xl-4">
+                        <div class="form-group">
+                            <label class="text-dark ft-medium">Spécialité</label>
+                            <input class="form-control rounded" formControlName="specialite">
+                        </div>
+                    </div>
+
+                    <div class="col-xl-4">
+                        <div class="form-group">
+                            <label class="text-dark ft-medium">Expérience</label>
+                            <input type="text" class="form-control rounded" formControlName="experience_offre">
+
+
+                        </div>
+                    </div>
+                    <div class="col-xl-4 ">
+                        <div class="form-group">
+                            <label class="text-dark ft-medium">Catégorie</label>
+                            <select class="form-control rounded" formControlName="category">
+                                <option *ngFor="let c of catgories" [value]="c.id">
+                                    {{c.nom_categorie}}</option>
+
+                            </select>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-xl-12">
+                        <div class="form-group">
+                            <label class="text-dark ft-medium">Compétence</label>
+
+
+                            <ng-select class="custom-select rounded" formControlName="skills"
+                                placeholder="Choose Skills" [items]="skills" bindLabel="skills_name" bindValue="id"
+                                [multiple]="true" placeholder="Select one or many skills" [(ngModel)]="selectedCityIds">
+
+
+                            </ng-select>
+
+
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-xl-12 col-lg-12 col-md-12">
+                        <div class="form-group">
+                            <label class="text-dark ft-medium">
+                                Description</label>
+                            <textarea class="form-control rounded" placeholder="détail offre"
+                                formControlName="description_offre"></textarea>
+                        </div>
+                    </div>
+                </div>
+
+
+
+
+
+
+
+
+
+                <div class="col-12">
+                    <div class="form-group text-center">
+                        <button type="submit" class="btn btn-md ft-medium text-light rounded theme-bg "
+                            (click)="updateoffre(); modal.dismiss('Cross click')">
+                            Enregistrer</button>
+                    </div>
+                </div>
+
+
+            </form>
+        </div>
+    </div>
+
+
+
+
+
+</ng-template>

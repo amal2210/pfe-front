@@ -1,0 +1,90 @@
+<div id="main-wrapper">
+
+    <!-- ============================================================== -->
+    <!-- Top header  -->
+    <!-- ============================================================== -->
+    <!-- Start Navigation -->
+    <app-header></app-header>
+
+    <!-- End Navigation -->
+    <div class="clearfix"></div>
+    <!-- ============================================================== -->
+    <!-- Top header  -->
+    <!-- ============================================================== -->
+
+    <!-- ======================= dashboard Detail ======================== -->
+
+    <div class="dashboard-wrap bg-light">
+        <a class="mobNavigation" data-toggle="collapse" href="#MobNav" role="button" aria-expanded="false"
+            aria-controls="MobNav">
+            <i class="fas fa-bars mr-2"></i>Dashboard
+        </a>
+        <div class="collapse" id="MobNav">
+            <div class="dashboard-nav">
+                <div class="dashboard-inner">
+                    <ul data-submenu-title=" Dashboard">
+                        <li><a routerLink="/dashboard-condidate/resume">
+                                <i class="lni lni-add-files mr-2"></i>Mon CV
+                            </a>
+                        </li>
+                    </ul>
+                    <div *ngIf="info.autorized==1">
+                        <!---->
+           
+                        <ul>
+                            <li>
+                                <a routerLink="/dashboard-condidate"><i class="lni lni-dashboard mr-2"></i>Mon
+                                    Dashboard</a>
+                            </li>
+
+
+                            <li><a routerLink="/dashboard-condidate/applied">
+                                <i class="lni lni-briefcase mr-2"></i>Mes
+                                    condidatures
+                                </a>
+                            </li>
+                            <li><a routerLink="/dashboard-condidate/favoris/{{token}}"> <i class="lni lni-heart mr-1"></i>Mes favoris
+                                </a>
+                            </li>
+                            <li><a routerLink="/dashboard-condidate/alert"><i class="ti-bell mr-2"></i>suivie mon
+                                    projet</a>
+                            </li>
+
+
+                        </ul>
+
+                        <!-- <span class="count-tag"></span>-->
+
+                        <ul data-submenu-title="My Accounts">
+                            <li><a routerLink="/dashboard-condidate/profil/{{token}}">
+
+                                    <i class="lni lni-user mr-2"></i>Mon Profile </a>
+                            </li>
+
+                            <li><a routerLink="/dashboard-condidate/changePasswordcondidat"><i
+                                        class="lni lni-lock-alt mr-2"></i>Changer mot de passe
+                                </a></li>
+                            <li><a (click)="descativercompte()"><i class="lni lni-trash-can mr-2"></i>
+                                Désactiver mon compte</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="dashboard-content">
+
+            <router-outlet></router-outlet>
+
+            <!-- footer -->
+
+
+        </div>
+
+    </div>
+    <!-- ======================= dashboard Detail End ======================== -->
+
+    <a id="back2Top" class="top-scroll" title="Back to top" href="#"><i class="ti-arrow-up"></i></a>
+
+
+</div>

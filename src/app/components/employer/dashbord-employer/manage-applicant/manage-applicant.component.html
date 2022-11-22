@@ -1,0 +1,427 @@
+<div class="dashboard-widg-bar d-block  bg-white">
+    <div class="row">
+        <div class="col-xl-12 col-lg-12 col-md-12  bg-light">
+
+
+            <div class="row">
+                <div class="col-xl-12 col-lg-12 col-md-12">
+
+                    <div class="px-3 py-2 br-bottom br-top bg-white rounded mb-3">
+                        <div class="flixors">
+                            <div class="row align-items-center justify-content-between">
+
+                                <div class="col-xl-3 col-lg-4 col-md-5 col-sm-12">
+                                    <div class="form-group filter-search-box px-4 pt-3 pb-0">
+
+                                        <input type="text" class="form-control" placeholder="titre ou date"
+                                            [(ngModel)]="condidat">
+                                    </div>
+
+                                </div>
+
+
+                                <div class="col-xl-4 col-lg-4 col-md-5 col-sm-12">
+                                    <div class="filter_wraps elspo_wrap d-flex align-items-center justify-content-end">
+                                        <div class="single_fitres mr-2 br-right">
+                                            <select (change)="condstatut($event)" class="custom-select simple bg-light">
+                                                <option value="0" selected="">candidature en attente</option>
+                                                <option value="1">candidature accepter</option>
+                                                <option value="2">candidature refuser</option>
+
+                                            </select>
+                                        </div>
+
+                                    </div>
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            
+                
+            <div *ngIf="condidatures==''">
+                <span class="text-danger">
+                    aucune candidature en refuser
+                </span>
+                
+            
+            </div>
+               
+<div >
+                <div  class="dashed-list-wrap bg-white rounded mb-3" *ngFor="let con of condidatures |filter:condidat">
+
+
+
+                   
+                    <div class="dashed-list-full bg-white rounded p-3 mb-3" *ngIf="con.status==statuscandidat">
+                      
+                       
+                        <div class="dashed-list-short d-flex align-items-center">
+                            <div class="dashed-list-short-first">
+                                <div class="dashed-avater"><img
+                                        src="https://127.0.0.1:8000/uploads/{{con.freelancer.ImageFree}}"
+                                        class="img-fluid circle" width="70" alt=""></div>
+                            </div>
+                            <div class="dashed-list-short-last">
+                                <div class="cats-box-caption px-2">
+                                    <h4 class="fs-lg mb-0 ft-medium theme-cl" routerLink="/detailfree/{{token}}">
+                                        {{con.freelancer.nom}}
+                                        {{con.freelancer.prenom}}</h4>
+                                    <div class="d-block mb-2 position-relative">
+                                        <span><i class="lni lni-map-marker mr-1"></i>
+                                            {{con.freelancer.AdresseFree}}</span>
+                                        <span class="ml-2"><i
+                                                class="lni lni-briefcase mr-1"></i>{{con.freelancer.diplome}} </span>
+                                        <span class="ml-2"><i
+                                                class="lni lni-calendar mr-1"></i>{{con.date_creation}}</span>
+
+                                    </div>
+                                    <div class="ico-content">
+                                        <ul>
+                                            <li *ngIf="con.cv!=''"><a target="_parent"
+                                                    href="https://127.0.0.1:8000/uploads/{{con.cv}}"
+                                                    class="px-2 py-1 medium bg-light rounded text-dark"><i
+                                                        class="lni lni-download mr-1"></i>Télécharger CV</a></li>
+                                            <li><a [routerLink]="['/detailjob',con.offre.id]"
+                                                    class="px-2 py-1 medium bg-light-info rounded text-info"> <i
+                                                        class="lni lni-arrow-right-circle mr-1"></i>
+                                                    voir l'offre </a></li>
+
+
+                                            <li class="dashed-list-last text-left px-7 ">
+                                                <div *ngIf="con.status==1">
+                                                    <a class="px-2 py-1 medium bg-light-success rounded text-success"
+                                                        (click)="open(content,con.id)">
+                                                        <i class="lni lni-shift-right mr-1"></i>lancer mon travail</a>
+
+
+                                                </div>
+                                            </li>
+                                            <li *ngIf="con.deposer_projet !=''"><a target="_blank"
+                                                    href="{{con.deposer_projet}}"> télécharger travail</a></li>
+                                        </ul>
+                                    </div>
+                                </div>
+
+
+                                <div class="dashed-list-last">
+                                    <div class="text-left" *ngIf="con.status==0">
+                                        <a class="btn btn-success ft-medium apply-btn fs-sm rounded mr-1"
+                                            (click)="acceptcondidature(con.id)">
+                                            <i class="lni lni-add-files mr-1"></i>Accepter</a>
+                                        <a (click)="refuser(con.id)"
+                                            class="btn btn-danger ft-medium apply-btn fs-sm rounded mr-1">
+                                            <i class="lni lni-remove-file mr-1"></i>Refuser</a>
+
+                                    </div>
+
+
+
+                                    <ng-template #content let-modal>
+
+                                        <div class="modal-header">
+
+                                            <h4 class="modal-title" id="modal-basic-title"> {{con.offre.titre}} :
+                                                affecté à
+                                                {{con.freelancer.nom}} {{con.freelancer.prenom}}</h4>
+                                            <button type="button" class="btn btn-close" aria-label="Close"
+                                                (click)="modal.dismiss('Cross click')"></button>
+                                        </div>
+                                        <div class="modal-body">
+                                            <div class="dashboard-widg-bar d-block">
+
+                                                <form [formGroup]="taskform">
+
+                                                    <div class="col-xl-12 col-lg-12 col-md-12">
+                                                        <div class="mb-4 tbl-lg rounded overflow-hidden">
+                                                            <div class="table-responsive bg-white">
+                                                                <table class="table">
+                                                                    <thead class="thead-dark">
+                                                                        <tr>
+                                                                            <th scope="col">Offre</th>
+                                                                            <th scope="col">Tâche</th>
+                                                                            <th scope="col">Avancement</th>
+                                                                            <th scope="col">Statut</th>
+                                                                            <th scope="col">propriétaire</th>
+                                                                            <th scope="col">action</th>
+                                                                        </tr>
+                                                                    </thead>
+                                                                    <tbody>
+                                                                        <tr *ngFor="let t of listtask">
+                                                                            <td>
+                                                                                {{t.condidatureName}}
+                                                                            </td>
+                                                                            <td>
+                                                                                {{t.task}}
+                                                                            </td>
+                                                                            <td>
+                                                                                {{t.avancement}}
+                                                                            </td>
+                                                                            <td>
+                                                                                {{t.status_name}}
+                                                                            </td>
+                                                                            <td *ngIf="t.ownercompany==true">
+
+                                                                                {{t.entrepriseName}}
+                                                                            </td>
+                                                                            <td *ngIf="t.ownercompany==false">
+
+                                                                                {{t.freelancerName}}
+                                                                            </td>
+
+                                                                            <td>
+                                                                                <div class="dash-action">
+                                                                                    <a (click)="modaldescription(desc,t)"
+                                                                                        class="p-2 circle text-info bg-light-info d-inline-flex align-items-center justify-content-center mr-1"><i
+                                                                                            class="lni lni-eye"></i></a>
+
+
+
+                                                                                    <a (click)="modalnotes(addnotes,t.id)"
+                                                                                        class="p-2 circle text-dark bg-whites d-inline-flex align-items-center justify-content-center"><i
+                                                                                            class="lni lni-add-files mr-1"></i>
+                                                                                    </a>
+                                                                                    <a (click)="deletetache(t.id)"
+                                                                                        class="p-2 circle text-danger bg-light-danger d-inline-flex align-items-center justify-content-center ml-1"><i
+                                                                                            class="lni lni-trash-can"></i></a>
+                                                                                    <a (click)="modifiertache(t)"
+                                                                                        class="p-2 circle text-success bg-light-success d-inline-flex align-items-center justify-content-center"><i
+                                                                                            class="lni lni-pencil-alt"></i></a>
+
+
+
+                                                                                </div>
+
+                                                                            </td>
+                                                                            <ng-template #addnotes let-modal>
+
+                                                                                <div
+                                                                                    class="card-wrap-body mb-3  rounded p-3 text-center">
+                                                                                    <div class="modal-header">
+
+                                                                                        <h4>Note {{t.task}}</h4>
+                                                                                        <button type="button"
+                                                                                            class="btn btn-close"
+                                                                                            aria-label="Close"
+                                                                                            (click)="modal.dismiss('Cross click')"></button>
+                                                                                    </div>
+                                                                                    <div
+                                                                                        class="modal-body  justify-content-center">
+
+
+                                                                                        <form
+                                                                                            [formGroup]="validerTaskbyfree">
+                                                                                            <input type="hidden"
+                                                                                                class="form-control rounded"
+                                                                                                formControlName="idtask">
+                                                                                            <input type="hidden"
+                                                                                                class="form-control rounded"
+                                                                                                formControlName="token">
+
+                                                                                            <input type="hidden"
+                                                                                                class="form-control rounded"
+                                                                                                formControlName="status_hidden">
+
+                                                                                            <select
+                                                                                                (change)="selectecdstatus($event)"
+                                                                                                [value]="t.status"
+                                                                                                class="form-control"
+                                                                                                formControlName="tstatus">
+                                                                                                <option value="0">En
+                                                                                                    attente
+                                                                                                </option>
+                                                                                                <option value="1">
+                                                                                                    En cours de
+                                                                                                    developement
+                                                                                                </option>
+                                                                                                <option value="2">
+                                                                                                    Terminé</option>
+                                                                                                <option value="3">
+                                                                                                    validé</option>
+                                                                                                <option value="4">
+                                                                                                    vérification
+                                                                                                </option>
+                                                                                            </select><br>
+
+
+
+                                                                                            <textarea
+                                                                                                class="form-control ht-80"
+                                                                                                formControlName="note"
+                                                                                                placeholder="note">
+
+                                                                                                   </textarea>
+                                                                                            <div class="py-1"></div>
+
+                                                                                            <div class="form-group">
+                                                                                                <button
+                                                                                                    (click)="updatenote();modal.dismiss('Cross click')"
+                                                                                                    type="button"
+                                                                                                    class="btn btn-dark">envoyer
+                                                                                                </button>
+                                                                                            </div>
+
+
+                                                                                        </form>
+
+                                                                                    </div>
+                                                                                </div>
+
+
+
+
+
+
+
+
+                                                                            </ng-template>
+
+
+                                                                            <ng-template #desc let-modal>
+
+                                                                                <div
+                                                                                    class="card-wrap-body mb-3  rounded p-3 text-center">
+                                                                                    <div class="modal-header">
+
+                                                                                        <h4>description</h4>
+                                                                                        <button type="button"
+                                                                                            class="btn btn-close"
+                                                                                            aria-label="Close"
+                                                                                            (click)="modal.dismiss('Cross click')"></button>
+                                                                                    </div>
+                                                                                    <div class="modal-body">
+                                                                                        <div
+                                                                                            class="dashboard-widg-bar d-block">
+                                                                                            <p> {{t.description}}</p>
+
+                                                                                        </div>
+                                                                                    </div>
+                                                                                </div>
+
+
+
+
+
+
+                                                                            </ng-template>
+
+
+                                                                        </tr>
+
+
+                                                                    </tbody>
+                                                                </table>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+
+
+
+                                                    <div class="row">
+
+
+                                                        <div class="form-group">
+                                                            <label class="text-dark ft-medium">
+                                                            </label>
+                                                            <input type="hidden" class="form-control rounded"
+                                                                formControlName="condidature_id">
+                                                            <input type="hidden" class="form-control rounded"
+                                                                formControlName="token">
+                                                            <input type="hidden" class="form-control rounded"
+                                                                formControlName="id">
+
+
+
+                                                        </div>
+                                                        <div class="col-xl-6">
+                                                            <div class="form-group">
+                                                                <label class="text-dark ft-medium">tâche
+                                                                </label>
+                                                                <textarea rows="10" cols="10"
+                                                                    class="form-control rounded" placeholder="Title"
+                                                                    formControlName="task">
+                                                            </textarea>
+
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-xl-6">
+                                                            <div class="form-group">
+                                                                <label class="text-dark ft-medium">description
+                                                                </label>
+                                                                <textarea rows="10" cols="10"
+                                                                    class="form-control rounded" placeholder="Title"
+                                                                    formControlName="description">
+                                                            </textarea>
+
+                                                            </div>
+                                                        </div>
+
+                                                        <div class="col-xl-6">
+                                                            <div class="form-group">
+                                                                <label class="text-dark ft-medium">avancement
+                                                                </label>
+                                                                <input type="number" class="form-control rounded"
+                                                                    min="0" max="100" formControlName="avancement">
+
+
+                                                            </div>
+                                                        </div>
+                                                        <div class="col-xl-6">
+                                                            <div class="form-group">
+                                                                <label class="text-dark ft-medium">état de tâche
+                                                                </label>
+                                                                <select class="form-control rounded"
+                                                                    formControlName="status">
+                                                                    <option value="0"> En attente
+                                                                    </option>
+                                                                    <option value="1"> En cours de
+                                                                        developement</option>
+                                                                    <option value="2"> Terminé</option>
+                                                                    <option value="3"> validé</option>
+                                                                    <option value="4"> en cours de vérification</option>
+
+                                                                </select>
+
+
+
+                                                            </div>
+                                                        </div>
+
+
+
+
+
+
+
+
+
+
+
+
+                                                        <div class="col-12">
+                                                            <div class="form-group text-center">
+                                                                <button type="submit" (click)=" ajoutertask()"
+                                                                    class="btn btn-md ft-medium text-light rounded theme-bg ">
+                                                                    Enregistrer</button>
+                                                            </div>
+                                                        </div>
+
+                                                    </div>
+                                                </form>
+                                            </div>
+                                        </div>
+                                    </ng-template>
+                                </div>
+
+
+                            </div>
+
+                        </div>
+                    </div>
+                </div></div>
+
+            </div>
+        </div>

@@ -1,0 +1,184 @@
+<div class="bg-light py-5">
+    <div class="container">
+
+        <div class="row">
+
+            <div class="col-xl-8 col-lg-8 col-md-8 col-sm-12">
+
+                <div class="bg-white rounded px-3 py-4 mb-4">
+                    <div class="jbd-01 d-flex align-items-center justify-content-between">
+                        <div class="jbd-flex d-flex align-items-center justify-content-start">
+                            <div class="jbd-01-thumb">
+                                <img src="assets/img/c-1.png" class="img-fluid" width="90" alt="">
+                            </div>
+                            <div class="jbd-01-caption pl-3">
+                                <div class="tbd-title">
+                                    <h4 class="mb-0 ft-medium fs-md">
+                                        {{offre.titre}} </h4>
+                                </div>
+                                <div class="jbl_location mb-3"><span>
+                                        <i class="lni lni-map-marker mr-1"></i>
+                                        {{entreprises.adresse}},
+                                        <i class="lni lni-apartment mr-1"> {{entreprises.nom_entreprise}}</i>
+
+                                    </span>
+
+                                    <span class="medium ft-medium text-warning ml-3">
+                                        <i class="lni lni-alarm-clock mr-1"></i> Date d'expiration :
+                                        {{offre.date_limite}}</span>
+                                    <br>
+
+                                    <!-- <span class="px-2 py-1 ft-medium medium rounded theme-cl theme-bg-light mr-2">
+                                    createdAt : {{offre.date_creation.date | date :'short'}}</span>
+
+                             -->
+                                </div>
+
+
+                            </div>
+                        </div>
+
+
+                    </div>
+                </div>
+
+
+                <div class="bg-white rounded mb-4">
+                    <div class="jbd-01 px-3 py-4">
+
+
+                        <div class="jbd-details mb-4">
+                            <h5 class="ft-medium fs-md"> Description:</h5>
+                            <div class="position-relative row">
+                                <div class="col-lg-12 col-md-12 col-12">
+                                    <div class="mb-2 mr-4 ml-lg-0 mr-lg-4">
+                                        <h6 class="mb-0 ml-3 text-muted fs-sm">
+                                            {{offre.description_offre}}</h6>
+
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="jbd-details mb-4">
+                            <h5 class="ft-medium fs-md">Expérience</h5>
+                            <div class="other-details">
+                                <div class="details ft-medium"><label class="text-muted">
+                                        {{offre.experience_offre}} Year</label>
+                                </div>
+
+                            </div>
+                        </div>
+
+                        <div class="jbd-details mb-1">
+                            <h5 class="ft-medium fs-md">Key Skills</h5>
+                            <div class="jbl_info01">
+                                <ul class="p-0 skills_tag text-left">
+                                    <li *ngFor="let o of offre.skills" >
+                                        <span
+                                            class="px-2 py-1 medium skill-bg rounded text-dark">{{o.skills_name}}</span>
+
+                                    </li>
+                                </ul>
+                            </div>
+                        </div> 
+                        <div class="jbd-details mb-4">
+                            <h5 class="ft-medium fs-md"> Informations Entreprise </h5>
+                            <div class="other-details">
+                                <div class="details ft-medium"><label class="text-muted">Email</label><span
+                                        class="text-dark"> {{entreprises.email}} </span></div>
+                                <div class="details ft-medium"><label class="text-muted"> Type entreprise</label><span
+                                        class="text-dark"> {{entreprises.type_entreprise}} </span></div>
+                                <div class="details ft-medium"><label class="text-muted">Téléphone</label><span
+                                        class="text-dark"> {{entreprises.telephone}} </span></div>
+                                <div class="details ft-medium"><label class="text-muted">Spécialité</label><span
+                                        class="text-dark"> {{offre.specialite}} </span></div>
+
+                            </div>
+                        </div>
+
+                    </div>
+
+                    <!-- <div class="jbd-02 px-3 py-3 br-top">
+                        <div class="jbd-02-flex d-flex align-items-center justify-content-between">
+                            <div class="jbd-02-social">
+                                <ul class="jbd-social">
+                                    <li><i class="ti-sharethis"></i></li>
+                                    <li><a href="https://www.facebook.com/"><i class="ti-facebook"></i></a></li>
+                                    <li><a href="javascript:void(0);"><i class="ti-twitter"></i></a></li>
+                                    <li><a href="javascript:void(0);"><i class="ti-linkedin"></i></a></li>
+                                    <li><a href="javascript:void(0);"><i class="ti-instagram"></i></a></li>
+                                </ul>
+                            </div>
+                           
+                        </div>
+                    </div> -->
+                </div>
+
+            </div>
+
+            <!-- Sidebar -->
+            <div class="col-xl-4 col-lg-4 col-md-4 col-sm-12" *ngIf="isConnect() && isroleREE()">
+                <div class="jb-apply-form bg-white rounded py-3 px-4 box-static">
+                    <h4 class="ft-medium fs-md mb-3">POSTULER À CETTE OFFRE</h4>
+                   
+                    <li >
+                        <input id="a1" class="form-check-input" name="ADA" [value]="cv"
+                            type="checkbox" (change)="getanciencv($event)" >
+                        <label for="a1" class="form-check-label">
+                            utiliser mon ancien cv:  <a target="_blank" style="display: initial;"
+                            href="https://127.0.0.1:8000/uploads/{{cv}}" > <b>{{cv}}</b>
+                            </a>
+                             </label>
+                    </li>
+
+
+                    <form class="_apply_form_form" enctype="multipart/form-data" [formGroup]="formcondidature">
+
+
+
+
+
+                        <input type="hidden" formControlName="offre_id">
+                       <!---- <input type="hidden" formControlName="CV">--->
+                       
+                        <input type="hidden" formControlName="user_id">
+                        <input type="hidden" formControlName="cheminCV" accept=".pdf, .txt" />
+
+                        <div class="form-group">
+                            <label class="text-dark mb-1 ft-medium medium">
+                                modifier votre cv :<font>pdf, doc, docx</font>
+                            </label>
+                            <div class="custom-file">
+                                <input type="file" class="file-input" id="customFile"
+                                    (change)="onFileSelected($event)">
+                                <label class="file-label" for="customFile">choisir une fichier</label>
+                            </div>
+                           
+                            
+                        </div>
+
+                        <div class="form-group">
+                            <div class="terms_con">
+                                <input id="aa3" class="checkbox-custom" name="Coffee" type="checkbox">
+
+                            </div>
+                        </div>
+
+                        <div class="form-group">
+                            <button type="button"
+                                class="btn btn-md rounded theme-bg text-light ft-medium fs-sm full-width"
+                                (click)="postcondidature()"> <i class="lni lni-envelope mr-1"></i>
+                                postuler
+                            </button>
+
+                        </div>
+
+                    </form>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>

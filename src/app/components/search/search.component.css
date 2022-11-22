@@ -1,0 +1,29 @@
+.form-check-label {
+
+    padding-left: 35px;
+
+}
+
+.form-check-input {
+    width: 20px;
+    height: 20px;
+    padding: 0;
+    margin: 0;
+    border-color: #767978;
+    background-color: rgb(255, 255, 255);
+    vertical-align: bottom;
+    position: relative;
+
+
+}
+
+.form-check-input:checked {
+
+
+    background-color: #05af78;
+}
+
+
+#favoris {
+color: rgb(245, 110, 110);
+}

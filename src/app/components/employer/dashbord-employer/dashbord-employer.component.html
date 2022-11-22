@@ -1,0 +1,95 @@
+<!---------------1ere page aside menuur--------->
+
+
+<div id="main-wrapper">
+
+    <!-- ============================================================== -->
+    <!-- Top header  -->
+    <!-- ============================================================== -->
+    <!-- Start Navigation -->
+
+    <!-- End Navigation -->
+    
+    <!-- ============================================================== -->
+
+
+    <!-- ======================= header ======================== -->
+    <app-header></app-header>
+    
+    <div class="dashboard-wrap bg-light ">
+        <!------------------------------asidemenu---------------------------->
+
+        <!--asidemenu- employer-->
+
+
+
+        <a class="mobNavigation" data-toggle="collapse" href="#MobNav" role="button" aria-expanded="false"
+            aria-controls="MobNav">
+            <i class="fas fa-bars mr-2"></i>
+        </a>
+        <div class="collapse" id="MobNav">
+            <div class="dashboard-nav ">
+                <div class="dashboard-inner ">
+                    <ul data-submenu-title="Dashboard">
+
+                        <li class="active"><a routerLink="/dashbord-employer"><i
+                                    class="lni lni-dashboard mr-2"></i>Mon Dashboard</a></li>
+                        <li><a routerLink="/dashbord-employer/postjob"><i class="lni lni-add-files mr-2"></i> Poster une offre
+                                </a></li>
+                        <li><a routerLink="/dashbord-employer/managejob"><i class="lni lni-pointer-right"></i> Consulter mes offre
+                                </a>
+                        </li>
+                        <li><a routerLink="/dashbord-employer/applicant"><i class="lni lni-list"></i> Gérer les condidatures</a></li>
+
+
+
+                       
+                    </ul>
+                    <ul data-submenu-title="Mon Compte">
+
+                        <li><a routerLink="/dashbord-employer/editprofil/{{token}}">
+                                <i class="lni lni-user mr-2"></i>Mon Profile </a>
+                                
+                        </li>
+                        <li><a routerLink="/dashbord-employer/companyprofil/{{token}}"
+                            ><i class="lni lni-pencil mr-2"></i>Éditer mon compte </a></li>
+                            
+
+                        <li><a routerLink="/dashbord-employer/passwordcompany">
+
+                                <i class="lni lni-lock-alt mr-2"></i>Changer mot de passe</a></li>
+                                <li><a (click)="descativercompte()"><i class="lni lni-trash-can mr-2"></i>Désactiver mon compte </a></li>
+
+
+                        
+                    </ul>
+                </div>
+
+
+            </div>
+        </div>
+
+
+
+
+
+
+        <!------------------------------------------>
+        <div class="dashboard-content">
+            <a class="mobNavigation" data-toggle="collapse" href="#MobNav" role="button" aria-expanded="false"
+                aria-controls="MobNav">
+                <i class="fas fa-bars mr-2"></i>Dashboard Navigation
+            </a>
+            <router-outlet></router-outlet>
+            <!-- footer -->
+
+
+        </div>
+
+    </div>
+    <!-- ======================= dashboard Detail End ======================== -->
+
+
+
+
+</div>

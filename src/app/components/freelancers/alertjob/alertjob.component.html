@@ -1,0 +1,62 @@
+<div class="dashboard-tlbar d-block mb-5">
+    <div class="row">
+
+    </div>
+</div>
+
+<div class="dashboard-widg-bar d-block">
+    <div class="row">
+        <div class="col-xl-12 col-lg-12 col-md-12">
+            <div class="mb-4 tbl-lg rounded overflow-hidden">
+                <div class="table-responsive bg-white">
+                    <table class="table">
+                        <thead class="thead-dark">
+                            <tr>
+                                <th scope="col">Offre</th>
+                                <th scope="col">Tâche</th>
+                                <th scope="col">Avancement</th>
+                                <th scope="col">Statut</th>
+                                <th scope="col">propriétaire</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr *ngFor="let t of listtask">
+                                <td>
+                                    {{t.condidatureName}}
+                                </td>
+                                <td>
+                                    {{t.task}}
+                                </td>
+                                <td>
+                                    {{t.avancement}}
+                                </td>
+                                <td>
+                                    {{t.status_name}}
+                                </td>
+                                <td *ngIf="t.ownercompany==true">
+
+                                    {{t.entrepriseName}}
+                                </td>
+                                <td *ngIf="t.ownercompany==false">
+
+                                    {{t.freelancerName}}
+                                </td>
+
+
+                            </tr>
+
+
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+</div>
+
+<!-- footer -->
+<div class="row">
+
+</div>

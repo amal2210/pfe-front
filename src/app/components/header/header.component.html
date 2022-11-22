@@ -1,0 +1,785 @@
+<!--*****
+    *********************************
+    *****************       HEADER         ***********************************
+    ************************************************************-->
+<div class="header header-light head-shadow position-relative">
+    <div class="container">
+        <nav id="navigation" class="navigation navigation-landscape">
+            <div class="nav-header">
+                <a class="nav-brand" href="#">
+                    <img src="assets/img/FREE.png" class="logo"  width="300px" heigth="100px" alt="" />
+                </a>
+                <div class="nav-toggle"></div>
+                <div class="mobile_nav">
+                    <ul>
+                        <li>
+                            <a href="#" data-toggle="modal" data-target="#login" class="theme-cl fs-lg">
+                                <i class="lni lni-user"></i>
+                            </a>
+                        </li>
+
+                    </ul>
+                </div>
+            </div>
+            <div class="nav-menus-wrapper" style="transition-property: none;">
+                <ul class="nav-menu">
+
+                    <li class=""><a routerLink="">chercher des offres</a>
+
+                    </li>
+                    <li *ngIf="isConnect()&& isrolecompany()"><a routerLink="/dashbord-employer">Mon Dashboard</a>
+
+                    </li>
+
+
+                    <li *ngIf="isConnect() && isroleREE()"><a routerLink="/dashboard-condidate">Mon Dashboard</a>
+
+                    </li>
+
+
+                    <li><a routerLink="/free" *ngIf="isConnect()">Freelances</a>
+
+                    </li>
+
+                </ul>
+                <ul class="nav-menu nav-menu-social align-to-right">
+
+                    <li *ngIf="!isConnect()">
+                        <a data-toggle="modal" data-target="#login" class="theme-cl ft-medium">
+                            <i class="lni lni-user mr-2"></i>Se connecter
+                        </a>
+                    </li>
+                    <li *ngIf=" isConnect() && isrolecompany()">
+                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button"
+                            data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            <span> mon profil</span>
+                            <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+                                <ul class="dropdown-item" routerLink="/dashbord-employer/companyprofil/{{token}}">
+                                    <li class="d-inline-flex text-center m-auto circle border p-2">
+                                        <img style="width:20px;height:20px;" class="img-fluid circle"
+                                            src="https://127.0.0.1:8000/uploads/{{logo}}">
+                                    </li> <span class="account-user-name py-2">{{username}}</span>
+                                </ul>
+
+                                <a class="dropdown-item" href="#">
+                                    <a (click)="logout()">
+                                        <i class="lni lni-power-switch mr-1"></i> Déconnecter
+                                    </a>
+                                </a>
+                            </div>
+                        </a>
+
+                    </li>
+
+                    <li *ngIf="isConnect() && isroleREE()">
+                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button"
+                            data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            <span> mon profil</span>
+                            <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+                                <ul class="dropdown-item" routerLink="/dashboard-condidate/profil/{{token}}">
+                                    <li class="d-inline-flex text-center m-auto circle border p-2">
+                                        <img style="width:20px;height:20px;" class="img-fluid circle"
+                                            src="https://127.0.0.1:8000/uploads/{{image}}">
+                                    </li> <span class="account-user-name py-2">{{username}}</span>
+                                </ul>
+
+                                <a class="dropdown-item" href="#">
+                                    <a *ngIf="isConnect()" (click)="logout()">
+                                        <i class="lni lni-power-switch mr-1"></i> Déconnecter
+                                    </a>
+                                </a>
+                            </div>
+                        </a>
+
+                    </li>
+                </ul>
+
+
+            </div>
+        </nav>
+    </div>
+</div>
+
+
+
+
+
+
+<!--*****
+*********************************
+********************  LOGIN   **************************************
+******************************************************************-->
+
+
+
+
+
+
+<div class="modal fade show" id="login" tabindex="-1" role="dialog" aria-labelledby="loginmodal">
+    <div class="modal-dialog modal-m login-pop-form" role="document">
+
+        <div class="modal-content" id="loginmodal">
+            <div class="modal-headers">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span class="ti-close"></span>
+                </button>
+            </div>
+
+            <div class="modal-body p-5">
+                <div class="text-center mb-4">
+                    <h2 class="m-0 ft-regular">Se Connecter</h2>
+                </div>
+
+                <form [formGroup]="loginForm">
+
+                    <div class="form-group">
+                        <label class="text-dark ft-medium">Email</label>
+                        <input type="email" class="form-control " formControlName="email" placeholder="uppcl@gmail.com"
+                            required [ngClass]="{ 'is-invalid': submit && f.email.errors }"
+                            pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$">
+
+                        <div *ngIf="submit && f.email.errors" class="invalid-feedback ">
+                            <div *ngIf="f.email.errors['required']">Email Obligatoire</div>
+
+                            <div *ngIf="f.email.errors['pattern']"> Email non valide </div>
+
+                        </div>
+
+
+                    </div>
+
+                    <div class="form-group">
+                        <label class="text-dark ft-medium">Mot de passe </label>
+                        <input type="password" class="form-control" formControlName="password" required=""
+                            [ngClass]="{ 'is-invalid': submit && f.password.errors }">
+
+
+                        <div class="invalid-feedback" *ngIf="submit && f.password.errors">
+                            <div *ngIf="f.password.errors.required">Mot de passe Obligatoire</div>
+
+                        </div>
+                        <div *ngIf="erreurlogin" class="text-danger">email mot de passe non valide</div>
+
+                    </div>
+
+
+
+
+                    <div class="form-group">
+                        <div class="d-flex align-items-center justify-content-between">
+
+                            <div class="eltio_k2">
+                                <a href="#" class="theme-cl" data-dismiss="modal"
+                                    (click)="oubliemotdepasse(motdepasse)">Mot de passe
+                                    oublié?</a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <button type="submit" (click)="login()"
+                            class="btn btn-md full-width theme-bg text-light fs-md ft-medium ">Se Connecter</button>
+                    </div>
+
+
+                    <div class="form-group text-center mb-0">
+                        <p class="extra">Vous n'avez pas de compte?
+                            <a class="text-dark" href="#" data-toggle="modal" data-target="#compte"
+                                data-dismiss="modal"> S'inscrire</a>
+
+                        </p>
+                    </div>
+
+
+                </form>
+
+
+            </div>
+        </div>
+
+    </div>
+
+</div>
+
+<ng-template #motdepasse let-modal>
+
+    <div class="modal-header">
+
+        <h4 class="modal-title" id="modal-basic-title"> <a>oublié mot de passe </a></h4>
+        <button type="button" class="btn btn-close" aria-label="Close" (click)="modal.dismiss('Cross click')"></button>
+    </div>
+    <div class="modal-body">
+        <div class="dashboard-widg-bar d-block">
+
+            <div class="form-group ">
+                <div class="row align-items-center">
+                    <form [formGroup]="formmail">
+                        <div class="col-lg-2">
+                            Email:
+                        </div>
+
+                        <div class="col-lg-10">
+                            <input type="email" formControlName="email" class="form-control">
+
+                        </div>
+                    </form>
+
+                </div>
+            </div>
+            <div class="jbl_button mb-2 text-center">
+                <div class="form-group ">
+                    <a class="btn btn-md full-width theme-bg text-light fs-md ft-medium" style="width:3cm"
+                        (click)="forgetpassword()">Enyoyer</a>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+</ng-template>
+<!--*****
+    *********************************
+    **********************choose ACCOUNT************
+    ********************************************************************-->
+
+
+
+
+
+<div class="modal fade show" id="compte" tabindex="-1" role="dialog" aria-labelledby="cp">
+    <div class="modal-dialog modal-lg login-pop-form" role="document">
+
+        <div class="modal-content" id="cp">
+            <div class="modal-headers">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span class="ti-close"></span>
+                </button>
+            </div>
+            <div class="jb-list01-thumb text-center">
+                <img src="assets/img/freesa.png" width="90px" height="90px" alt="" class="logo">
+                <h2 style=" font-family: 'Alegreya-500';font-size:'bold';
+                color: #626463 !important;">FREESEASON</h2>
+            </div>
+            <div class="modal-body ">
+                <div class="row justify-content-center ">
+
+                    <div class="col-xl-6">
+                        <div class="mt-5 rounded border p-4 z-index-1 bg-white">
+                            <div class="drt-block text-center mb-2">
+                                <div class="d-inline-flex align-items-center justify-content-center p-2 rounded border">
+                                    <img src="assets/img/company.png" class="img-fluid" width="250" height="250" alt="">
+                                </div>
+                            </div>
+                            <div class="drt-block-caption">
+
+                                <div class="drt-btn-block">
+                                    <!-- // data-toggle="modal" data-target="#register"
+                                    // routerLink="/registercompany" -->
+                                    <a data-toggle="modal" data-toggle="modal" data-target="#register"
+                                        class="btn btn-md theme-bg text-light full-width rounded " data-dismiss="modal">
+                                        Créer Compte Entreprise
+                                    </a>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+
+
+
+
+
+                    <div class="col-xl-6">
+                        <div class="mt-5 rounded border p-4 z-index-1 bg-white">
+                            <div class="drt-block text-center mb-2">
+                                <div class="d-inline-flex align-items-center justify-content-center p-2 rounded border">
+                                    <img src="assets/img/fr2.png" class="img-fluid" width="250" height="250" alt="">
+                                </div>
+                            </div>
+                            <div class="drt-block-caption">
+
+                                <div class="drt-btn-block">
+                                    <a class="btn btn-md theme-bg text-light full-width rounded" data-toggle="modal"
+                                        data-toggle="modal" data-target="#freelancer" data-dismiss="modal">Créer Compte
+                                        Freelance
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>
+
+<!--*****
+    *********************************
+    *********************ACCOUNT COMPANY*************
+    **************************************************************-->
+
+
+<div class="modal fade show" id="register" tabindex="-1" role="dialog" aria-labelledby="reg">
+    <div class="modal-dialog modal-lg login-pop-form" role="document">
+
+        <div class="modal-content" id="reg">
+            <div class="modal-headers">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span class="ti-close"></span>
+                </button>
+            </div>
+
+            <div class="jb-list01-thumb text-center">
+                <img src="assets/img/freesa.png" width="90px" height="90px" alt="" class="logo">
+                <h2 style=" font-family: 'Alegreya-500';font-size:'bold';
+                color: #626463 !important;">FREESEASON</h2>
+            </div>
+            <div class="modal-body ">
+
+
+
+                <form [formGroup]="registerForm" (ngSubmit)="register()">
+
+
+                    <div class="row">
+                        <div class="col-xl-4">
+
+                            <div class="form-group">
+                                <label class="text-dark ft-medium">Nom utilisateur</label>
+                                <input type="text" class="form-control" formControlName="username" required
+                                    minlength="3" maxlength="20"
+                                    [ngClass]="{ 'is-invalid': submitt && f1.username.errors }">
+
+
+                                <div class="invalid-feedback" *ngIf="submitt && f1['username'].errors">
+                                    <div *ngIf="f1.username.errors.required">
+                                        Nom Utilisateur obligatoire
+                                    </div>
+                                    <div *ngIf="f1.username.errors['minlength']">
+                                        Nom Utilisateur doit être supérieur à 3 caractére
+                                    </div>
+                                    <div *ngIf="f1.username.errors['maxlength']">
+                                        Nom Utilisateur doit être inférieur à 20 caractére
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-xl-4">
+                            <div class="form-group">
+                                <label class="text-dark ft-medium">Nom Entreprise</label>
+                                <input type="text" class="form-control" formControlName="nom_entreprise" required
+                                    [ngClass]="{ 'is-invalid': submitt && f1.nom_entreprise.errors }">
+
+
+                                <div class="invalid-feedback" *ngIf="submitt && f1['nom_entreprise'].errors">
+                                    <div *ngIf="f1.nom_entreprise.errors.required">
+                                        Nom Entreprise obligatoire
+                                    </div>
+
+                                </div>
+
+                            </div>
+
+                        </div>
+
+
+                        <div class="col-xl-4">
+                            <div class="form-group">
+                                <label class="text-dark ft-medium">Téléphone</label>
+                                <input type="text" class="form-control" formControlName="telephone" required
+                                    [ngClass]="{ 'is-invalid': submitt && f1.telephone.errors }">
+
+
+                                <div class="invalid-feedback" *ngIf="submitt && f1['telephone'].errors">
+                                    <div *ngIf="f1.telephone.errors.required">
+                                        Téléphone obligatoire
+                                    </div>
+                                    <div *ngIf="f1.telephone.errors['pattern']">
+                                        Téléphone doit être numérique
+                                    </div>
+                                    <div *ngIf="f1.telephone.errors['minlength']">
+                                        Minimum 8 numéro
+                                    </div>
+                                    <div *ngIf="f1.telephone.errors['maxlength']">
+                                        Maximum 13 numéro
+                                    </div>
+
+
+
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-xl-4">
+                            <div class="form-group">
+                                <label class="text-dark ft-medium">Type Entreprise</label>
+                                <input type="text" class="form-control" formControlName="type_entreprise" required
+                                    [ngClass]="{ 'is-invalid': submitt && f1.type_entreprise.errors }">
+
+                                <div class="invalid-feedback" *ngIf="submitt && f1['type_entreprise'].errors">
+                                    <div *ngIf="f1.type_entreprise.errors.required">
+                                        Type Entreprise obligatoire
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+
+
+
+                        <div class="col-xl-4">
+
+
+                            <div class="form-group">
+                                <label class="text-dark ft-medium"> Adresse Entreprise</label>
+                                <input type="text" class="form-control" formControlName="adresse" required
+                                    [ngClass]="{ 'is-invalid': submitt && f1.adresse.errors }">
+
+
+                                <div class="invalid-feedback" *ngIf="submitt && f1['adresse'].errors">
+                                    <div *ngIf="f1.adresse.errors.required">
+                                        Adresse Entreprise obligatoire
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="col-xl-4">
+                            <div class="form-group">
+                                <div class="form-group">
+                                    <label class="text-dark ft-medium">Secteur d'activité</label>
+                                    <input type="text" class="form-control" formControlName="secteur_activite" required
+                                        [ngClass]="{ 'is-invalid': submitt && f1.secteur_activite.errors }">
+
+
+                                    <div class="invalid-feedback" *ngIf="submitt && f1['secteur_activite'].errors">
+                                        <div *ngIf="f1.secteur_activite.errors.required">
+                                            Secteur d'activité obligatoire
+                                        </div>
+
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row">
+
+                        <div class="col-xl-4">
+
+                            <div class="form-group">
+                                <label class="text-dark ft-medium">Email</label>
+                                <input type="email" class="form-control" formControlName="email" value="uppcl@gmail.com"
+                                    required [ngClass]="{ 'is-invalid': submitt && f1.email.errors }"
+                                    pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$">
+
+                                <div class="invalid-feedback" *ngIf="submitt && f1.email.errors">
+                                    <div *ngIf="f1.email.errors['required']">Email obligatoire</div>
+                                    <div *ngIf=" f1.email.errors.pattern"> Email non valide
+
+
+                                        <div *ngIf="submitt && emailexiste">
+                                            email existe déja</div>
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+                        <div class="col-xl-4">
+                            <div class="form-group">
+                                <label class="text-dark ft-medium">Mot de passe</label>
+                                <input type="password" class="form-control" formControlName="password" value="password"
+                                    minlength="6" required [ngClass]="{ 'is-invalid': submitt && f1.password.errors }">
+
+                                <div class="invalid-feedback" *ngIf="submitt && f1.password.errors">
+                                    <div *ngIf="f1.password.errors.required">Mot de passe obligatoire</div>
+                                    <div *ngIf="f1.password.errors['minlength']">
+                                        Minimum 6 caractères
+                                    </div>
+
+
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-xl-4">
+                            <div class="form-group">
+                                <label class="text-dark ft-medium">Confirmer mot de passe </label>
+                                <input type="password" class="form-control" formControlName="confirmPassword" required
+                                    [ngClass]="{ 'is-invalid': submitt&& f1.confirmPassword.errors }">
+
+                                <div class="invalid-feedback" *ngIf="submitt && f1.confirmPassword.errors">
+                                    <div *ngIf="f1.confirmPassword.errors.required"> obligatoire</div>
+
+                                    <div *ngIf="f1.confirmPassword.errors.mustMatch"> Le mot de passe et le mot de passe
+                                        de confirmation ne correspondent pas.</div>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-xl-12 text-center">
+                        <div class="form-group">
+                            <button type="submit" class="btn btn-md ft-medium text-light rounded theme-bg"> S'inscrire
+                            </button>
+                        </div>
+                    </div>
+                    <div></div>
+
+
+                </form>
+
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+<!--*****
+    *********************************
+    ***********************ACCOUNT FREELANCERS ********************************
+    ****************************************-->
+
+
+
+
+
+<div class="modal fade show" id="freelancer" tabindex="-1" role="dialog" aria-labelledby="fr">
+    <div class="modal-dialog modal-lg login-pop-form" role="document">
+
+        <div class="modal-content" id="fr">
+            <div class="jb-list01-thumb text-center">
+                <img src="assets/img/freesa.png" width="90px" height="90px" alt="" class="logo">
+                <h2 style=" font-family: 'Alegreya-500';font-size:'bold';
+                            color: #626463 !important;">FREESEASON</h2>
+            </div>
+            <div class="modal-body ">
+
+
+
+                <form [formGroup]="registerFreeForm" (ngSubmit)="registerFree()">
+                    <div class="row">
+                        <div class="col-md-3">
+
+                            <div class="form-group">
+                                <label class="text-dark ft-medium">
+                                    Nom </label>
+                                <input type="text" class="form-control rounded" formControlName="nom" required
+                                    [ngClass]="{ 'is-invalid': submitted&& free.nom.errors }">
+
+                                <div class="invalid-feedback" *ngIf="submitted && free['nom'].errors">
+                                    <div *ngIf="free.nom.errors.required">
+                                        Nom obligatoire
+                                    </div>
+                                </div>
+
+
+                            </div>
+                        </div>
+                        <div class="col-md-3">
+                            <div class="form-group">
+                                <label class="text-dark ft-medium">Nom utilisateur
+                                </label>
+                                <input type="text" class="form-control rounded" formControlName="username" required
+                                    minlength="3" maxlength="20"
+                                    [ngClass]="{ 'is-invalid': submitted && free.username.errors }">
+
+                                <div class="invalid-feedback" *ngIf="submitted && free['username'].errors">
+                                    <div *ngIf="free.username.errors.required">
+                                        Nom Utilisateur obligatoire
+                                    </div>
+                                    <div *ngIf="free.username.errors['minlength']">
+                                        Nom utilisateur doit être supérieur à 3 caractére
+                                    </div>
+                                    <div *ngIf="free.username.errors['maxlength']">
+                                        Nom utilisateur doit être inférieur à 20 caractére
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+
+                        <div class="col-md-3">
+                            <div class="form-group">
+                                <label class="text-dark ft-medium">
+                                    Prénom</label>
+                                <input type="text" class="form-control rounded" formControlName="prenom" required
+                                    [ngClass]="{ 'is-invalid': submitted&& free.prenom.errors }">
+                                <div class="invalid-feedback" *ngIf="submitted && free['prenom'].errors">
+                                    <div *ngIf="free.prenom.errors.required">
+                                        Prénom obligatoire
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+
+
+
+
+
+                        <div class="col-md-3">
+
+                            <div class="form-group">
+                                <label class="text-dark ft-medium">Adresse Freelance
+                                </label>
+                                <input type="text" class="form-control rounded" formControlName="AdresseFree" required
+                                    [ngClass]="{ 'is-invalid': submitted&& free.AdresseFree.errors }">
+                                <div class="invalid-feedback" *ngIf="submitted && free['AdresseFree'].errors">
+                                    <div *ngIf="free.AdresseFree.errors.required">
+                                        Adresse obligatoire
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-4">
+
+                            <div class="form-group">
+                                <label class="text-dark ft-medium">Téléphone</label>
+                                <input type="text" class="form-control " formControlName="telephone" required
+                                    [ngClass]="{ 'is-invalid': submitted && free.telephone.errors }">
+
+
+                                <div class="invalid-feedback" *ngIf="submitted && free['telephone'].errors">
+                                    <div *ngIf="free.telephone.errors.required">
+                                        Téléphone obligatoire
+                                    </div>
+                                    <div *ngIf="free.telephone.errors['pattern']">
+                                        Téléphone doit être numérique
+                                    </div>
+                                    <div *ngIf="free.telephone.errors['minlength']">
+                                        Minimum 8 numéro
+                                    </div>
+                                    <div *ngIf="free.telephone.errors['maxlength']">
+                                        Maximum 13 numéro
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-4 ">
+                            <div class="form-group">
+                                <label class="text-dark ft-medium">Email</label>
+                                <input type="email" class="form-control rounded" formControlName="email"
+                                    value="uppcl@gmail.com" required
+                                    [ngClass]="{ 'is-invalid': submitted && free.email.errors }"
+                                    pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$">
+
+                                <div class="invalid-feedback" *ngIf="submitted && free.email.errors">
+                                    <div *ngIf="free.email.errors['required']">Email obligatoire
+                                    </div>
+                                    <div *ngIf=" free.email.errors.pattern"> Email non valide
+
+                                        <div *ngIf="submitted && emailexiste1">
+                                            email existe déja</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-md-4 ">
+                            <div class="form-group">
+                                <label class="text-dark ft-medium">Mot de passe</label>
+                                <input type="password" class="form-control rounded" formControlName="password"
+                                    value="password" minlength="6" required
+                                    [ngClass]="{ 'is-invalid': submitted && free.password.errors }">
+
+                                <div class="invalid-feedback" *ngIf="submitted && free.password.errors">
+                                    <div *ngIf="free.password.errors.required">Mot de passe obligatoire</div>
+                                    <div *ngIf="free.password.errors['minlength']">
+                                        Minimum 6 caractères
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+
+
+
+                    <div class="row">
+                        <div class="col-md-4">
+
+                            <div class="form-group">
+                                <label class="text-dark ft-medium">Date de naissance</label>
+                                <input type="date" class="form-control rounded" placeholder="dd-mm-yyyy"
+                                    formControlName="date_naissance" required
+                                    [ngClass]="{ 'is-invalid': submitted && free.date_naissance.errors }">
+
+                                <div class="invalid-feedback" *ngIf="submitted && free['date_naissance'].errors">
+                                    <div *ngIf="free.date_naissance.errors.required">
+                                        Date de naissance obligatoire
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <div class="form-group">
+                                <label class="text-dark ft-medium">Genre
+                                </label>
+                                <select type="text" class="form-control rounded" formControlName="genre" required
+                                    [ngClass]="{ 'is-invalid': submitted&& free.genre.errors }">
+                                    <option>Homme</option>
+                                    <option>Femme</option>
+                                </select>
+                                <div class="invalid-feedback" *ngIf="submitted && free.genre.errors">
+                                    <div *ngIf="free.genre.errors.required">
+                                        Genre obligatoire</div>
+                                </div>
+                            </div>
+
+                        </div>
+
+
+
+                        <div class="col-xl-4 ">
+                            <div class="form-group">
+                                <label class="text-dark ft-medium"> confirmer Mot de passe
+                                </label>
+                                <input type="password" class="form-control rounded" formControlName="confirmPassword"
+                                    required [ngClass]="{ 'is-invalid': submitted&& free.confirmPassword.errors }">
+
+                                <div class="invalid-feedback" *ngIf="submitted && free.confirmPassword.errors">
+                                    <div *ngIf="free.confirmPassword.errors.required">
+                                        oligatoire</div>
+
+                                    <div *ngIf="free.confirmPassword.errors.mustMatch">
+                                        Le mot de passe et le mot de passe de confirmation ne correspondent pas.</div>
+                                </div>
+
+
+                            </div>
+                        </div>
+                    </div>
+
+
+
+
+                    <div class="form-group text-center">
+                        <button type="submit" class="btn btn-md ft-medium text-light rounded theme-bg">S'inscrire
+                        </button>
+                    </div>
+                </form>
+
+
+            </div>
+
+
+
+
+
+
+        </div>
+    </div>
+</div>

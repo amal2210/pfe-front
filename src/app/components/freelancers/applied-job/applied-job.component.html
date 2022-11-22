@@ -1,0 +1,386 @@
+<div class="container">
+    <div class="dashboard-tlbar d-block mb-5">
+
+
+
+
+
+        <div class="row">
+            <div class="px-3 py-2 br-bottom br-top bg-white rounded mb-3">
+                <div class="flixors">
+                    <div class="row align-items-center justify-content-between">
+
+                        <div class="col-xl-3 col-lg-4 col-md-5 col-sm-12">
+                            <div class="form-group filter-search-box px-4 pt-3 pb-0">
+
+                                <input type="text" class="form-control" placeholder="titre ou date"
+                                    [(ngModel)]="search">
+                            </div>
+
+                        </div>
+
+
+                        <div class="col-xl-4 col-lg-4 col-md-5 col-sm-12">
+                            <div class="filter_wraps elspo_wrap d-flex align-items-center justify-content-end">
+                                <div class="single_fitres mr-2 br-right">
+                                    <select (change)="condstatut($event)" class="form-control sm rounded">
+                                        <option value="0" selected="">candidature en attente</option>
+                                        <option value="1">candidature accepter</option>
+                                        <option value="2">candidature refuser</option>
+
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="dashboard-widg-bar d-block">
+
+
+
+
+        <div class="mb-4 tbl-lg rounded overflow-hidden">
+            <div class="table-responsive bg-white">
+                <div class="col-xl-8 col-lg-8 col-md-8 col-sm-12 ">
+                    <div class="pagination text-center">
+
+                        <pagination-controls (pageChange)="p = $event"></pagination-controls>
+
+
+                    </div>
+                </div>
+                <table class="table">
+                    <thead class="thead-dark">
+                        <tr>
+                            <th scope="col">titre offre</th>
+
+
+                            <th scope="col">date de postulation</th>
+                            <th scope="col">Statut</th>
+                            <th scope="col" *ngIf="statuscandidat==1">Action</th>
+
+                        </tr>
+                    </thead>
+                    <tbody *ngFor="let c of condidatures|filter:search |paginate: { itemsPerPage: 10, currentPage: p }">
+
+                        <tr *ngIf="c.status==statuscandidat">
+
+                            <td>
+                                <div class="cats-box rounded bg-white d-flex align-items-center">
+                                    <div class="text-center"><img src="assets/img/c-1.png" class="img-fluid" width="55"
+                                            alt=""></div>
+                                    <div class="cats-box-caption px-2">
+                                        <h4 class="fs-md mb-0 ft-medium">{{c.offre.titre}}</h4>
+                                        <div class="d-block mb-2 position-relative">
+                                            <span class="text-muted medium"><i
+                                                    class="lni lni-map-marker mr-1"></i>{{c.offre.entreprise.adresse}}</span>
+                                            <span class="muted medium ml-2 theme-cl"><i
+                                                    class="lni lni-briefcase mr-1"></i>{{c.offre.specialite}}</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </td>
+
+                            <td>{{c.date_creation}}</td>
+                            <!-- <td><span class="text-info" *ngIf="c.status==1">accepted</span></td>
+                                <td><span class="text-info" *ngIf="c.status==2">refus</span></td> -->
+                            <td>
+                                <label class=" text-success ft-medium apply-btn fs-sm rounded mr-1" *ngIf="c.status==1">
+
+                                    Accepter</label>
+                                <label class=" text-danger ft-medium apply-btn fs-sm rounded mr-1" *ngIf="c.status==2">
+                                    refuser</label>
+
+
+
+                                <label class=" text-info ft-medium apply-btn fs-sm rounded mr-1" *ngIf="c.status==0">
+                                    En Attente</label>
+                            </td>
+                            <td *ngIf="statuscandidat==1">
+                                <a (click)="open(content,c)"> lancer mon travail</a>
+                                <a (click)="deposerprojet(depot,c)"
+                                    class="px-2 py-1 medium bg-light-success rounded text-success">
+                                    <i class="lni lni-upload mr-1"></i>déposer mon travail </a>
+                            </td>
+                            <ng-template #depot let-modal>
+
+                                <div class="modal-header">
+
+                                    <h4 class="modal-title" id="modal-basic-title"> {{c.offre.titre}} : affecté à
+                                        {{c.freelancer.nom}} {{c.freelancer.prenom}}</h4>
+                                    <button type="button" class="btn btn-close" aria-label="Close"
+                                        (click)="modal.dismiss('Cross click')"></button>
+                                </div>
+                                <div class="row align-items-start justify-content-between">
+                                    <div class="col-xl-10 col-lg-8 col-md-12 col-sm-12">
+                                        <div class="modal-body">
+                                            <div class="dashboard-widg-bar d-block">
+
+                                                <form [formGroup]="depottask">
+
+                                                    <div class="mb-4 tbl-lg rounded overflow-hidden">
+
+                                                        <input type="url" formControlName="url" class="form-control" placeholder="saisir url">
+                                                        <input type="hidden" formControlName="token" class="form-control">
+                                                        <input type="hidden" formControlName="cand_id"
+                                                            class="form-control">
+                                                        <button type="button" class="btn btn-dark" (click)="urldepot()">envoyer
+                                                        </button>
+                                                    </div>
+
+
+
+
+
+                                                </form>
+                                            </div>
+                                        </div>
+                                    </div>
+
+
+                                </div>
+
+
+
+                            </ng-template>
+
+
+                            <ng-template #content let-modal>
+
+                                <div class="modal-header">
+
+                                    <h4 class="modal-title" id="modal-basic-title"> {{c.offre.titre}} : affecté à
+                                        {{c.freelancer.nom}} {{c.freelancer.prenom}}</h4>
+                                    <button type="button" class="btn btn-close" aria-label="Close"
+                                        (click)="modal.dismiss('Cross click')"></button>
+                                </div>
+                                <div class="row align-items-start justify-content-between">
+                                    <div class="col-xl-10 col-lg-8 col-md-12 col-sm-12">
+                                        <div class="modal-body">
+                                            <div class="dashboard-widg-bar d-block">
+
+                                                <form [formGroup]="taskform">
+
+                                                    <div class="mb-4 tbl-lg rounded overflow-hidden">
+
+                                                        <div class="table-responsive bg-white  ">
+
+
+
+                                                            <table class="table text-center">
+                                                                <thead class="thead-dark">
+                                                                    <tr>
+                                                                        <th scope="col">Offre</th>
+                                                                        <th scope="col">Tâche</th>
+                                                                        <th scope="col">Avancement</th>
+                                                                        <th scope="col">Statut</th>
+                                                                        <th scope="col">propriétaire</th>
+                                                                        <th scope="col">action</th>
+                                                                    </tr>
+                                                                </thead>
+                                                                <tbody class="gray modal-scrollbar">
+                                                                    <tr *ngFor="let t of listtask">
+                                                                        <td>
+                                                                            {{t.condidatureName}}
+                                                                        </td>
+                                                                        <td>
+                                                                            {{t.task}}
+                                                                        </td>
+                                                                        <td>
+                                                                            {{t.avancement}}
+                                                                        </td>
+                                                                        <td>
+                                                                            {{t.status_name}}
+                                                                        </td>
+                                                                        <td *ngIf="t.ownercompany==true">
+
+                                                                            {{t.entrepriseName}}
+                                                                        </td>
+                                                                        <td *ngIf="t.ownercompany==false">
+
+                                                                            {{t.freelancerName}}
+                                                                        </td>
+                                                                        <td>
+                                                                            <div class="dash-action">
+                                                                                <a (click)="modaldescription(desc,t)"
+                                                                                    class="p-2 circle text-info bg-light-info d-inline-flex align-items-center justify-content-center mr-1"><i
+                                                                                        class="lni lni-eye"></i></a>
+                                                                                <div class="py-1"></div>
+
+
+                                                                                <a (click)="modalnotes(addnotes,t.id)"
+                                                                                    class="p-2 circle text-success bg-light-success d-inline-flex align-items-center justify-content-center"><i
+                                                                                        class="lni lni-pencil"></i></a>
+
+                                                                            </div>
+
+
+                                                                        </td>
+                                                                        <ng-template #addnotes let-modal>
+
+                                                                            <div
+                                                                                class="card-wrap-body mb-3  rounded p-3 text-center">
+                                                                                <div class="modal-header">
+
+                                                                                    <h4>Note :{{t.task}}</h4>
+                                                                                    <button type="button"
+                                                                                        class="btn btn-close"
+                                                                                        aria-label="Close"
+                                                                                        (click)="modal.dismiss('Cross click')"></button>
+                                                                                </div>
+                                                                                <div
+                                                                                    class="modal-body  justify-content-center">
+
+
+                                                                                    <form
+                                                                                        [formGroup]="validerTaskbyfree">
+                                                                                        <input type="hidden"
+                                                                                            class="form-control rounded"
+                                                                                            formControlName="idtask">
+                                                                                        <input type="hidden"
+                                                                                            class="form-control rounded"
+                                                                                            formControlName="token">
+                                                                                        <input type="hidden"
+                                                                                            class="form-control rounded"
+                                                                                            formControlName="status_hidden">
+
+                                                                                        <select
+                                                                                            (change)="selectecdstatus($event)"
+                                                                                            [value]="t.status"
+                                                                                            class="form-control ht-80"
+                                                                                            formControlName="status">
+                                                                                            <option value="0" disabled>
+
+
+                                                                                                En attente
+                                                                                            </option>
+                                                                                            <option value="1">
+                                                                                                En cours de
+                                                                                                developement
+                                                                                            </option>
+                                                                                            <option value="2">
+                                                                                                Terminé</option>
+                                                                                            <option value="3" disabled>
+                                                                                                validé</option>
+                                                                                            <option value="4" disabled>
+                                                                                                en cours
+                                                                                                de vérification</option>
+                                                                                        </select><br>
+
+
+
+                                                                                        <textarea
+                                                                                            class="form-control ht-80"
+                                                                                            formControlName="note"
+                                                                                            placeholder="note">
+
+                                                                                                       </textarea>
+                                                                                        <div class="py-1"></div>
+
+                                                                                        <div class="form-group">
+                                                                                            <button
+                                                                                                (click)="updatetask()"
+                                                                                                type="button"
+                                                                                                class="btn btn-dark">envoyer
+                                                                                            </button>
+                                                                                        </div>
+
+
+                                                                                    </form>
+
+                                                                                </div>
+                                                                            </div>
+
+
+
+
+
+
+
+
+                                                                        </ng-template>
+
+
+                                                                        <ng-template #desc let-modal>
+
+                                                                            <div
+                                                                                class="card-wrap-body mb-3  rounded p-3 text-center">
+                                                                                <div class="modal-header">
+
+                                                                                    <h4>description</h4>
+                                                                                    <button type="button"
+                                                                                        class="btn btn-close"
+                                                                                        aria-label="Close"
+                                                                                        (click)="modal.dismiss('Cross click')"></button>
+                                                                                </div>
+                                                                                <div class="modal-body">
+                                                                                    <div
+                                                                                        class="dashboard-widg-bar d-block">
+                                                                                        <p> {{t.description}}</p>
+
+                                                                                    </div>
+                                                                                </div>
+                                                                            </div>
+
+
+
+
+
+
+                                                                        </ng-template>
+
+
+
+
+
+                                                                    </tr>
+
+
+
+                                                                </tbody>
+                                                            </table>
+
+
+                                                        </div>
+
+                                                    </div>
+
+
+
+
+
+                                                </form>
+                                            </div>
+                                        </div>
+                                    </div>
+
+
+                                </div>
+
+
+
+                            </ng-template>
+
+
+
+
+
+
+
+
+
+                        </tr>
+
+                    </tbody>
+                </table>
+
+
+            </div>
+        </div>
+    </div>
+</div>

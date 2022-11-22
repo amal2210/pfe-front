@@ -1,0 +1,898 @@
+<!-- </div><a id="back2Top" contentclass="top-scroll" title="Back to top"  style="display: inline;"><i class="ti-arrow-up"></i></a>
+        <! ----------------------------experience----------------------->
+<!--=============================================================================-->
+
+<div class="container">
+    <div class="row align-items-start justify-content-between ">
+
+        <div class="col-xl-4 col-lg-8 col-md-8 col-sm-12">
+
+            <div class="d-block border rounded mfliud-bot mb-4 bg-white">
+
+                <div class="cdt_author px-5 pt-5 pb-4 ">
+
+                    <div class="dash_auth_thumb circle p-1 border d-inline-flex">
+
+                        <img style="width:150px;height:150px;" class="img-fluid circle "
+                            src="https://127.0.0.1:8000/uploads/{{cheminImage}}" (click)="openimage(image,cheminImage)">
+
+
+                    </div>
+                    <h1 class="fs-lg ft-medium mb-0 lh-1 text-center py-1"> {{user.username}}
+                    </h1>
+                </div>
+                <!--***********************************************************************/
+/*****************************************************************************/
+/***********************************modifer photo profil************************/ -->
+                <ng-template #image let-modal>
+
+                    <div class="modal-header">
+
+                        <h4 class="modal-title" id="modal-basic-title"> </h4>
+                        <button type="button" class="btn btn-close" aria-label="Close"
+                            (click)="modal.dismiss('Cross click')"></button>
+                    </div>
+                    <div class="modal-body">
+
+                        <div class="dashboard-widg-bar d-block text-center">
+
+                            <div class="upload-btn-wrapper">
+                                <h4>Modifier la photo de profil</h4>&nbsp;&nbsp;
+                                <form [formGroup]="formLogo">
+                                    <input type="file" class="input-file" id="customFile" formControlName="ImageFree"
+                                        accept="image/png, image/jpeg " (change)="onFileSelected($event)">
+                                    <button type="submit" class="btn theme-bg text-light ft-regular ml-1"
+                                        aria-label="Close" (click)="uploadImage();modal.dismiss('Cross click')">
+                                        Enregistrer </button>
+
+                                </form>
+                                <div class="col-xl-6">
+                                    <form [formGroup]="forminput">
+                                        <input type="hidden" formControlName="type">
+                                        <input type="hidden" formControlName="token">
+                                        <input type="hidden" formControlName="url">
+                                    </form>
+                                </div>
+
+                                <div class="container">
+
+                                    <img style="width:150px;height: 150px;" class="img-fluid circle"
+                                        src="https://127.0.0.1:8000/uploads/{{cheminImage}}">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </ng-template>
+                <!--***************************************************************
+**************************************modifer profil*****************************
+************************************************************/ -->
+                <ng-template #profil let-modal>
+
+                    <div class="modal-header">
+
+                        <h4 class="modal-title" id="modal-basic-title"> </h4>
+                        <button type="button" class="btn btn-close" aria-label="Close"
+                            (click)="modal.dismiss('Cross click')"></button>
+                    </div>
+                    <div class="modal-body">
+
+                        <div class="dashboard-widg-bar d-block text-center">
+
+                            <div class="row">
+                                <div class=" col-xl-12 col-lg-12 col-md-12 col-sm-12">
+
+                                    <form [formGroup]="formfree">
+                                        <div class=" row">
+
+                                            <div class="col-lg-4">
+                                                <div class="form-group">
+                                                    <label> Nom utilisateur</label>
+                                                    <input type="text" class="form-control" formControlName="username"
+                                                        required minlength="3" maxlength="20"
+                                                        [ngClass]="{ 'is-invalid': subfree && free.username.errors }">
+
+                                                    <div class="invalid-feedback"
+                                                        *ngIf="subfree && free['username'].errors">
+                                                        <div *ngIf="free.username.errors.required">
+                                                            Nom Utilisateur obligatoire
+                                                        </div>
+                                                        <div *ngIf="free.username.errors['minlength']">
+                                                            Nom utilisateur doit être supérieur à 3 caractére
+                                                        </div>
+                                                        <div *ngIf="free.username.errors['maxlength']">
+                                                            Nom utilisateur doit être inférieur à 20 caractére
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+
+                                            <div class="col-lg-4">
+                                                <div class="form-group">
+                                                    <label> Nom</label>
+                                                    <input type="text" class="form-control" formControlName="nom"
+                                                        required
+                                                        [ngClass]="{ 'is-invalid': subfree&& free.nom.errors }">
+
+                                                    <div class="invalid-feedback" *ngIf="subfree && free['nom'].errors">
+                                                        <div *ngIf="free.nom.errors.required">
+                                                            Nom obligatoire
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                            <div class="col-lg-4">
+                                                <div class="form-group">
+                                                    <label>Prénom</label>
+                                                    <input type="text" class="form-control" formControlName="prenom"
+                                                        [ngClass]="{ 'is-invalid': subfree&& free.prenom.errors }">
+                                                    <div class="invalid-feedback"
+                                                        *ngIf="subfree && free['prenom'].errors">
+                                                        <div *ngIf="free.prenom.errors.required">
+                                                            Prénom obligatoire
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class=" row">
+
+                                            <div class="col-lg-4">
+                                                <div class="form-group">
+                                                    <label>Adresse </label>
+                                                    <input type="text" class="form-control"
+                                                        formControlName="adresseFree" placeholder="Adresse"
+                                                        [ngClass]="{ 'is-invalid': subfree&& free.adresseFree.errors }">
+                                                    <div class="invalid-feedback"
+                                                        *ngIf="subfree && free['adresseFree'].errors">
+                                                        <div *ngIf="free.adresseFree.errors.required">
+                                                            Adresse obligatoire
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-lg-4 ">
+                                                <div class="form-group">
+                                                    <label>Téléphone</label>
+                                                    <input type="text" class="form-control" formControlName="telephone"
+                                                        required
+                                                        [ngClass]="{ 'is-invalid': subfree && free.telephone.errors }">
+
+
+                                                    <div class="invalid-feedback"
+                                                        *ngIf="subfree && free['telephone'].errors">
+                                                        <div *ngIf="free.telephone.errors.required">
+                                                            Téléphone obligatoire
+                                                        </div>
+                                                        <div *ngIf="free.telephone.errors['pattern']">
+                                                            Téléphone doit être numérique
+                                                        </div>
+                                                        <div *ngIf="free.telephone.errors['minlength']">
+                                                            Minimum 8 numéro
+                                                        </div>
+                                                        <div *ngIf="free.telephone.errors['maxlength']">
+                                                            Maximum 13 numéro
+                                                        </div>
+
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-lg-4">
+                                                <div class="form-group">
+                                                    <label> genre </label>
+                                                    <input type="text" class="form-control" formControlName="genre"
+                                                        [ngClass]="{ 'is-invalid': subfree&& free.genre.errors }">
+
+                                                    <div class="invalid-feedback" *ngIf="subfree && free.genre.errors">
+                                                        <div *ngIf="free.genre.errors.required">
+                                                            Genre obligatoire</div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+
+
+                                        <div class=" row">
+
+
+                                            <div class="col-lg-4">
+                                                <div class="form-group">
+                                                    <label>Date de naissance</label>
+                                                    <input formControlName="date_naissance" class="form-control"
+                                                        formControlName="date_naissance" required
+                                                        [ngClass]="{ 'is-invalid': subfree && free.date_naissance.errors }">
+
+                                                    <div class="invalid-feedback"
+                                                        *ngIf="subfree && free['date_naissance'].errors">
+                                                        <div *ngIf="free.date_naissance.errors.required">
+                                                            Date de naissance obligatoire
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-lg-4">
+                                                <div class="form-group">
+                                                    <label> Email </label>
+                                                    <input type="text" class="form-control" formControlName="email"
+                                                        placeholder="Email"
+                                                        [ngClass]="{ 'is-invalid': subfree && free.email.errors }"
+                                                        pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$">
+
+                                                    <div class="invalid-feedback" *ngIf="subfree && free.email.errors">
+                                                        <div *ngIf="free.email.errors['required']">Email obligatoire
+                                                        </div>
+                                                        <div *ngIf=" free.email.errors.pattern"> Email non valide
+
+
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                        </div>
+
+                                        <div class="row">
+                                            <div class="col-lg-6 text-center">
+                                                <div class="form-group">
+                                                    <button type="submit" (click)="updateprofil()"
+                                                        class="btn btn-md ft-medium text-light rounded theme-bg">
+                                                        Enregistrer</button>
+                                                </div>
+                                            </div>
+
+
+                                        </div>
+                                    </form>
+
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </ng-template>
+                <!--- **********************************************************************************/
+/********************************************voir profil*******************************************/  -->
+                <div class="py-2"></div>
+                <div class="dashed-list-footer p-3 br-top">
+
+                    <div class="jbd-01-caption pl-3">
+                        <a class="text-success d-inline-flex" (click)="openprofil(profil,freelancer)">
+                            <i class="lni lni-pencil"></i></a>
+                        <div class="tbd-title">
+                            <p class="text-muted mb-0">Nom: <span class="text-dark ft-medium medium">
+                                    {{freelance_entreprise.nom}}
+                                    {{freelance_entreprise.prenom}}</span></p>
+                            <p class="text-muted mb-0">Sexe: <span class="text-dark ft-medium medium">
+                                    {{freelance_entreprise.genre}}</span></p>
+                            <p class="text-muted mb-0">Adresse: <span class="text-dark ft-medium medium">
+                                    {{freelance_entreprise.adresseFree}}</span></p>
+                            <p class="text-muted mb-0">Date naissance: <span class="text-dark ft-medium medium">
+                                    {{freelance_entreprise.date_naissance}}</span></p>
+                            <p class="text-muted mb-0">Email: <span class="text-dark ft-medium medium">
+                                    {{user.email}}</span></p>
+                            <p class="text-muted mb-0">Téléphone: <span class="text-dark ft-medium medium">
+                                    {{freelance_entreprise.telephone}}</span></p>
+                        </div>
+
+                        <div class="text-center align-items-center justify-content-center mt-3 row">
+                            <div class="col-xl-6">
+                                <a target="_blank" style="display: initial;"
+                                    href="https://127.0.0.1:8000/uploads/{{cheminCV}}" class="btn btn-dark mb-1">
+                                    <i class="lni lni-download"></i>
+                                    <span> voir mon CV</span>
+                                </a>
+                            </div>
+
+                            <div class="col-xl-6">
+                                <a style="display: initial;" class="btn btn-dark text-light"
+                                    (click)="modifcv(modfidercv)">
+                                    <i class="lni lni-upload"></i>
+                                    <span> modifier mon CV</span>
+                                </a>
+                            </div>
+                        </div>
+                        <!-- <div class="jbl_info01">
+                            <span class="px-2 py-1 ft-medium medium rounded theme-cl theme-bg-light mr-2"
+                                *ngFor="let s of freelance_entreprise.competances">{{s.titre}}</span>
+
+                        </div> -->
+                        <ng-template #modfidercv let-modal >
+
+                            <div  class="modal-header">
+
+                                <h4 class="modal-title" id="modal-basic-title"> </h4>
+                                <button type="button" class="btn btn-close" aria-label="Close"
+                                    (click)="modal.dismiss('Cross click')"></button>
+                            </div>
+                            <div class="modal-body">
+
+                                <div class="dashboard-widg-bar d-block text-center">
+
+                                    <div class="upload-btn-wrapper">
+                                        <h4>Modifier mon CV</h4>&nbsp;&nbsp;
+
+
+                                       
+
+                                            <form [formGroup]="formcv">
+                                                <input type="file" class="input-file" id="customFile"
+                                                    formControlName="cv" accept=".doc,.docx,application/pdf"
+                                                    (change)="OnFileCV($event)">
+                                                <button type="submit" class="btn theme-bg text-light ft-regular ml-1"
+                                                    aria-label="Close"
+                                                    (click)="uploadcv();modal.dismiss('Cross click')"> Enregistrer
+                                                </button>
+                                               <a href="https://127.0.0.1:8000/uploads/{{cheminCV}}">{{cheminCV}}</a>
+                                            </form>
+                                            <div class="col-xl-6">
+                                                <form [formGroup]="forminput">
+                                                    <input type="hidden" formControlName="type">
+                                                    <input type="hidden" formControlName="token">
+                                                    <input type="hidden" formControlName="url">
+                                                </form>
+                                                
+                                            
+                                    </div></div>
+                                        </div>
+                                    </div>
+                                
+                            
+
+                        </ng-template>
+                      
+                        <ng-template #image let-modal>
+
+                            <div class="modal-header">
+
+                                <h4 class="modal-title" id="modal-basic-title"> </h4>
+                                <button type="button" class="btn btn-close" aria-label="Close"
+                                    (click)="modal.dismiss('Cross click')"></button>
+                            </div>
+                            <div class="modal-body">
+
+                                <div class="dashboard-widg-bar d-block text-center">
+
+                                    <div class="upload-btn-wrapper">
+                                        <h4>Modifier la photo de profil</h4>&nbsp;&nbsp;
+                                        <form [formGroup]="formLogo">
+                                            <input type="file" class="input-file" id="customFile" formControlName="ImageFree"
+                                            accept=" image/*" (change)="onFileSelected($event)">
+                                            <button type="submit" class="btn theme-bg text-light ft-regular ml-1"
+                                                aria-label="Close" (click)="uploadImage();modal.dismiss('Cross click')">
+                                                Enregistrer </button>
+
+                                        </form>
+                                        <div class="col-xl-6">
+                                            <form [formGroup]="forminput">
+                                                <input type="hidden" formControlName="type">
+                                                <input type="hidden" formControlName="token">
+                                                <input type="hidden" formControlName="url">
+                                            </form>
+                                        </div>
+
+                                        <div class="container">
+
+                                            <img style="width:150px;height: 150px;" class="img-fluid circle"
+                                                src="https://127.0.0.1:8000/uploads/{{cheminImage}}">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </ng-template>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+  
+            <div class="card-wrap-body mb-4 bg-white rounded p-3">
+
+
+                <h4 class="ft-medium mb-1 fs-md text-center">LANGUES</h4>
+
+                <div class="dashed-list-last px-2">
+
+                    <ul class="list-group" id="langue">
+                        <li class="list-group-item d-flex justify-content-between align-items-center "
+                            *ngFor="let l of freelance_entreprise.langues">
+                            <span class="truncate-level" data-bs-toggle="popover" data-bs-placement="bottom"
+                                data-bs-container="body" data-bs-trigger="hover" data-bs-content="francais"
+                                id="langue9424649readNom" data-bs-original-title="" title=""
+                                aria-describedby="popover156423"> {{l.name_langue}}</span>
+
+                            <span class="badge bg-light rounded-pill truncate-level text-dark"
+                                style="font-size:10pt;font-weight:500;" data-bs-toggle="popover"
+                                data-bs-placement="bottom" data-bs-container="body" data-bs-trigger="hover"
+                                data-bs-content="intermédiare" data-bs-original-title="" title="">
+                                <span id="langue1">{{l.niveau}}</span>
+                            </span>
+                            <span>
+                                <a class="text-success d-inline-flex" (click)="openlangue(MODAL3,l)"> <i
+                                        class="lni lni-pencil"></i></a>
+                                <a class="text-danger d-inline-flex" (click)="deletelangue(l.id)"> <i
+                                        class="lni lni-trash-can"></i></a>
+                            </span>
+                        </li>
+                    </ul>
+
+                </div>
+
+
+
+            </div>
+
+
+            <div class="card-wrap-body mb-4 bg-white rounded p-3">
+
+
+                <h4 class="ft-medium mb-1 fs-md text-center py-1">COMPETENCES</h4>
+                <div class="dashed-list-last px-2">
+
+                    <ul class="list-group" id="langue">
+                        <li class="list-group-item d-flex justify-content-between align-items-center "
+                            *ngFor="let com of freelance_entreprise.competances">
+                            <span class="truncate-level" data-bs-toggle="popover" data-bs-placement="bottom"
+                                data-bs-container="body" data-bs-trigger="hover" data-bs-content="francais"
+                                id="langue9424649readNom" data-bs-original-title="" title=""
+                                aria-describedby="popover156423"> {{com.titre}}</span>
+
+                            <span class="badge bg-light rounded-pill truncate-level text-dark"
+                                style="font-size:10pt;font-weight:500;" data-bs-toggle="popover"
+                                data-bs-placement="bottom" data-bs-container="body" data-bs-trigger="hover"
+                                data-bs-content="intermédiare" data-bs-original-title="" title="">
+                                <span id="langue1">{{com.niveau}}</span>
+                            </span>
+                            <span>
+                                <a class="text-success d-inline-flex" (click)="opencompetence(modal2,com)"> <i
+                                        class="lni lni-pencil"></i></a>
+                                <a class="text-danger d-inline-flex" (click)="deletecompetence(com.id)"> <i
+                                        class="lni lni-trash-can"></i></a>
+                            </span>
+                        </li>
+                    </ul>
+
+                </div>
+
+            </div>
+
+
+        </div>
+
+
+        <div class="col-xl-8 col-lg-8 col-md-12 col-sm-12">
+
+            <div class="card-wrap-body mb-4 bg-white rounded p-3">
+                <div class="jbd-01 px-3 py-4">
+
+                    <div class="_dashboard_content_body py-3 px-3">
+                        <div class="abt-cdt d-block full-width mb-4">
+                            <h4 class="ft-medium mb-1 fs-md">EXPERIENCE PROFESSIONNLLE</h4>
+                            <div class="exslio-list mt-3">
+                                <ul>
+                                    <li *ngFor="let e of freelance_entreprise.experiences ">
+
+
+                                        <div class="esclio-110 bg-light rounded px-3 py-3">
+                                            <span class="mb-0 ft-medium fs-md"> {{e.titre}} :
+                                                {{e.societe}}</span><br>
+
+                                            <span class="text-muted mr-2"><i class="lni lni-calendar mr-1"></i>
+                                                {{e.dateDebut}} &nbsp;-&nbsp; {{e.dateFin}}</span>
+                                            <div class="esclio-110-decs full-width">
+                                                <p>{{e.details}}</p>
+                                            </div>
+                                            <div class="dash-action ">
+                                                <a class="text-success d-inline-flex" (click)="open(content,e)"><i
+                                                        class="lni lni-pencil"></i></a>
+                                                <a class="text-danger d-inline-flex" (click)="deleteexperince(e.id)"><i
+                                                        class="lni lni-trash-can"></i></a>
+
+                                            </div>
+
+
+
+
+
+                                        </div>
+                                    </li>
+
+
+                                </ul>
+                            </div>
+                        </div>
+                        <div class="abt-cdt d-block full-width mb-4">
+                            <h4 class="ft-medium mb-1 fs-md">FORMATIONS</h4>
+                            <div class="exslio-list mt-3">
+                                <ul>
+                                    <li *ngFor="let education of freelance_entreprise.formations">
+                                        <div class="esclio-110 bg-light rounded px-3 py-3">
+
+                                            <div class="esclio-110-info full-width mb-2">
+                                                <h4 class="mb-0 ft-medium fs-md">{{education.titre}} :
+                                                    {{education.ecole}}</h4>
+
+                                                <span class="text-muted mr-2"><i
+                                                        class="lni lni-calendar mr-1"></i>{{education.dateDebut}}
+                                                    &nbsp;-&nbsp; {{education.dateFin}}</span>
+                                            </div>
+                                            <div class="esclio-110-decs full-width">
+                                                <p>{{education.details}}</p>
+                                            </div>
+                                            <div class="dash-action ">
+                                                <a class="text-success d-inline-flex"
+                                                    (click)="openformation(modal1,education)"><i
+                                                        class="lni lni-pencil"></i></a>
+                                                <a class="text-danger d-inline-flex"
+                                                    (click)="deleteformation(education.id)"><i
+                                                        class="lni lni-trash-can"></i></a>
+
+                                            </div>
+                                        </div>
+                                    </li>
+
+
+                                </ul>
+                            </div>
+                        </div>
+
+
+
+                    </div>
+
+
+
+                </div>
+
+                <div class="jbd-02 px-3 py-3 br-top">
+
+                </div>
+
+
+            </div>
+        </div>
+
+    </div>
+
+
+
+
+    <ng-template #content let-modal>
+
+        <div class="modal-header">
+
+            <h4 class="modal-title " id="modal-basic-title"> Modifier Expérience</h4>
+            <button type="button" class="btn btn-close" aria-label="Close"
+                (click)="modal.dismiss('Cross click')"></button>
+        </div>
+        <div class="modal-body">
+            <div class="dashboard-widg-bar d-block">
+
+
+                <div class="_dashboard_content bg-white rounded mb-4">
+
+                    <form class="row" [formGroup]="formExperience">
+                        <div class="col-xl-12 col-lg-12">
+                            <div class="gray rounded p-3 mb-3 position-relative">
+
+                                <div class="form-group">
+                                    <label class="text-dark ft-medium">Nom de l'entreprise</label>
+                                    <input type="text" formControlName="societe" class="form-control rounded"
+                                        placeholder="Employer Name" required
+                                        [ngClass]="{ 'is-invalid': submit1 && f.societe.errors }">
+
+                                    <div class="invalid-feedback" *ngIf="submit1 && f.societe.errors">
+                                        <div *ngIf="f.societe.errors.required">Nom de l'entreprise obligatoire</div>
+                                    </div>
+                                </div>
+
+                                <div class="form-group">
+                                    <label class="text-dark ft-medium">Titre offre</label>
+                                    <input type="text" formControlName="titre" class="form-control rounded"
+                                        placeholder="Title" required
+                                        [ngClass]="{ 'is-invalid': submit1 && f.titre.errors }">
+
+                                    <div class="invalid-feedback" *ngIf="submit1 && f.titre.errors">
+                                        <div *ngIf="f.titre.errors.required">Titre offre obligatoire</div>
+                                    </div>
+                                </div>
+
+                                <div class="form-row">
+                                    <div class="col-6">
+                                        <div class="form-group">
+                                            <label class="text-dark ft-medium">Date Début</label>
+                                            <input type="date" formControlName="date_debut" class="form-control rounded"
+                                                placeholder="dd-mm-yyyy" required
+                                                [ngClass]="{ 'is-invalid': submit1 && f.date_debut.errors }">
+
+                                            <div class="invalid-feedback" *ngIf="submit1 && f.date_debut.errors">
+                                                <div *ngIf="f.date_debut.errors.required">Date Début obligatoire</div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-6">
+                                        <div class="form-group">
+                                            <label class="text-dark ft-medium">Date Fin</label>
+                                            <input type="date" formControlName="date_fin" class="form-control rounded"
+                                                placeholder="dd-mm-yyyy" required
+                                                [ngClass]="{ 'is-invalid': submit1 && f.date_fin.errors }">
+
+                                            <div class="invalid-feedback" *ngIf="submit1 && f.date_fin.errors">
+                                                <div *ngIf="f.date_fin.errors.required">Date fin obligatoire
+                                                </div>
+
+                                            </div>
+
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="text-dark ft-medium">Détails</label>
+                                    <textarea class="form-control ht-80" formControlName="details"
+                                        placeholder="Note Optional"></textarea>
+                                </div>
+
+                            </div>
+                        </div>
+                        <div class="col-xl-12 col-lg-12">
+                            <div class="form-group">
+                                <!-- <button type="submit"
+                            class="btn gray ft-medium apply-btn fs-sm rounded"><i
+                                class="fas fa-plus mr-1"></i>Add
+                            Experience</button> -->
+
+
+                                <div class="col-xl-12 col-lg-12">
+                                    <div class="form-group">
+                                        <button type="submit" (click)="updateexperience();"
+                                            class="btn bg-dark hover-theme text-light ft-regular ml-1">Enregistrer</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                    </form>
+                </div>
+
+
+
+
+            </div>
+        </div>
+
+    </ng-template>
+
+
+
+    <ng-template #modal1 let-modal>
+
+        <div class="modal-header">
+
+            <h4 class="modal-title" id="modal-basic-title"> Modifier Formation</h4>
+            <button type="button" class="btn btn-close" aria-label="Close"
+                (click)="modal.dismiss('Cross click')"></button>
+        </div>
+        <div class="modal-body">
+            <div class="dashboard-widg-bar d-block">
+
+
+                <div class="_dashboard_content bg-white rounded mb-4">
+                    <form class="row" [formGroup]="formEducation">
+                        <div class="col-xl-12 col-lg-12">
+                            <div class="gray rounded p-3 mb-3 position-relative">
+
+                                <div class="form-group">
+                                    <label class="text-dark ft-medium">Ecole</label>
+                                    <input type="text" class="form-control rounded" formControlName="nom_ecole"
+                                        placeholder="School Name" required
+                                        [ngClass]="{ 'is-invalid': submit2 && f2.nom_ecole.errors }">
+
+                                    <div class="invalid-feedback" *ngIf="submit2 && f2.nom_ecole.errors">
+                                        <div *ngIf="f2.nom_ecole.errors.required">Ecole obligatoire
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="text-dark ft-medium">Titre de formation</label>
+                                    <input type="text" class="form-control rounded" formControlName="titre_diplome"
+                                        placeholder=" Title" required
+                                        [ngClass]="{ 'is-invalid': submit2 && f2.titre_diplome.errors }">
+
+                                    <div class="invalid-feedback" *ngIf="submit2 && f2.titre_diplome.errors">
+                                        <div *ngIf="f2.titre_diplome.errors.required"> Titre de formation obligatoire
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="form-row">
+                                    <div class="col-6">
+                                        <div class="form-group">
+                                            <label class="text-dark ft-medium"> Date Début</label>
+                                            <input type="date" class="form-control rounded" formControlName="date_debut"
+                                                placeholder="dd-mm-yyyy" required
+                                                [ngClass]="{ 'is-invalid': submit2 && f2.date_debut.errors }">
+
+                                            <div class="invalid-feedback" *ngIf="submit2 && f2.date_debut.errors">
+                                                <div *ngIf="f2.date_debut.errors.required">Date début obligatoire
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-6">
+                                        <div class="form-group">
+                                            <label class="text-dark ft-medium">Date Fin</label>
+                                            <input type="date" class="form-control rounded" formControlName="date_fin"
+                                                placeholder="dd-mm-yyyy" required
+                                                [ngClass]="{ 'is-invalid': submit2 && f2.date_fin.errors }">
+
+                                            <div class="invalid-feedback" *ngIf="submit2 && f2.date_fin.errors">
+                                                <div *ngIf="f2.date_fin.errors.required">Date Fin obligatoire
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="text-dark ft-medium">Détails</label>
+                                    <textarea class="form-control ht-80" formControlName="details"
+                                        placeholder="Note Optional"></textarea>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-xl-12 col-lg-12">
+                            <div class="form-group">
+                                <button type="submit" (click)="updateformation(); "
+                                    class="btn bg-dark hover-theme text-light ft-regular ml-1">
+                                    Enregistrer
+                                </button>
+                            </div>
+                        </div>
+
+                    </form>
+                </div>
+
+
+
+
+            </div>
+        </div>
+
+    </ng-template>
+
+
+
+    <ng-template #modal2 let-modal>
+
+        <div class="modal-header">
+
+            <h4 class="modal-title" id="modal-basic-title"> Modifier Compétence </h4>
+            <button type="button" class="btn btn-close" aria-label="Close"
+                (click)="modal.dismiss('Cross click')"></button>
+        </div>
+        <div class="modal-body">
+            <div class="dashboard-widg-bar d-block">
+
+
+                <div class="_dashboard_content bg-white rounded mb-4">
+                    <form class="row" [formGroup]="formCompetence">
+                        <div class="col-xl-12 col-lg-12">
+                            <div class="gray rounded p-3 mb-3 position-relative">
+
+
+                                <div class="form-group">
+                                    <label class="text-dark ft-medium">Nom de compétence</label>
+                                    <input type="text" class="form-control rounded" formControlName="titre"
+                                        placeholder="Skills Name" required
+                                        [ngClass]="{ 'is-invalid': submit3 && f1.titre.errors }">
+
+                                    <div class="invalid-feedback" *ngIf="submit3 && f1.titre.errors">
+                                        <div *ngIf="f1.titre.errors.required">Nom de compétence obligatoire</div>
+                                    </div>
+                                </div>
+
+                                <div class="form-group">
+                                    <label class="text-dark ft-medium">Niveau obligatoire </label>
+                                    <select class="form-control rounded" formControlName="niveau" required selected
+                                        [ngClass]="{ 'is-invalid': submit3 && f1.niveau.errors }">
+
+
+                                        <option value="Débutant">Débutant</option>
+                                        <option value="Intermédiaire">Intermédiaire</option>
+                                        <option value="Avancé">Avancé</option>
+
+                                    </select>
+                                    <div class="invalid-feedback" *ngIf="submit3 && f1.niveau.errors">
+                                        <div *ngIf="f1.niveau.errors.required">Niveau obligatoire
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-xl-12 col-lg-12">
+                            <div class="form-group">
+                                <button type="submit" (click)="updatecompetence();"
+                                    class="btn bg-dark hover-theme text-light ft-regular ml-1">
+                                    Enregistrer
+                                </button>
+                            </div>
+                        </div>
+
+                    </form>
+                </div>
+
+
+
+
+            </div>
+        </div>
+
+    </ng-template>
+
+
+
+    <ng-template #MODAL3 let-modal>
+
+        <div class="modal-header">
+
+            <h4 class="modal-title" id="modal-basic-title"> Modifier Langue</h4>
+            <button type="button" class="btn btn-close" aria-label="Close"
+                (click)="modal.dismiss('Cross click')"></button>
+        </div>
+        <div class="modal-body">
+            <div class="dashboard-widg-bar d-block">
+
+
+                <div class="_dashboard_content bg-white rounded mb-4">
+
+                    <form class="row" [formGroup]="formlangue">
+                        <div class="col-xl-12 col-lg-12">
+                            <div class="gray rounded p-3 mb-3 position-relative">
+
+                                <div class="form-group">
+                                    <label class="text-dark ft-medium">Langue </label>
+                                    <input type="text" class="form-control rounded" formControlName="name_langue"
+                                        placeholder="Skills Name" required
+                                        [ngClass]="{ 'is-invalid': submit && f3.name_langue.errors }">
+
+                                    <div class="invalid-feedback" *ngIf="submit && f3.name_langue.errors">
+                                        <div *ngIf="f3.name_langue.errors.required">Langue obligatoire
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="form-group">
+                                    <label class="text-dark ft-medium">Niveau</label>
+                                    <select class="form-control rounded" formControlName="niveau" required
+                                        [ngClass]="{ 'is-invalid': submit && f3.niveau.errors }">
+
+
+
+                                        <option value="Débutant">Débutant</option>
+                                        <option value="Intermédiaire">Intermédiaire</option>
+                                        <option value="Avancé">Avancé</option>
+                                    </select>
+                                    <div class="invalid-feedback" *ngIf="submit && f3.niveau.errors">
+                                        <div *ngIf="f3.niveau.errors.required">Niveau obligatoire</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-xl-12 col-lg-12">
+                            <div class="form-group">
+                                <button type="submit" (click)="updateLangue()"
+                                    class="btn btn-dark ft-medium text-light rounded">Enregistrer
+                                </button>
+                            </div>
+                        </div>
+
+                    </form>
+                </div>
+
+
+
+
+            </div>
+        </div>
+
+    </ng-template>

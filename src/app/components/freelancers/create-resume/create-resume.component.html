@@ -1,0 +1,433 @@
+<div class="dashboard-tlbar d-block mb-5">
+    <div class="row">
+        <div class="colxl-12 col-lg-12 col-md-12">
+            <h1 class="ft-medium add-resume">Créer un cv</h1>
+            <p *ngIf="info==0"> vous devez compléter votre profil:
+                remplir au moins une formations et une compétence</p>
+        </div>
+    </div>
+</div>
+<div class="row align-items-center justify-content-between">
+    <div class="col-md-12 col-sm-12">
+
+        <div class="d-block position-relative border rounded py-3 px-3 mb-4 bg-whites">
+            <h4 class="ft-medium"></h4>
+            <div id="accordion" class="accordion">
+                <div class="card">
+                    <div class="card-header" id="h1">
+                        <h5 class="mb-0">
+                            <button class="btn btn-link collapsed" data-toggle="collapse" data-target="#ord1"
+                                aria-expanded="false" aria-controls="ord1">
+                                <div class="_dashboard__header_flex">
+                                    <h4 class="mb-0 ft-medium fs-md"><i
+                                            class="fas fa-briefcase mr-1 theme-cl fs-sm"></i>Expériences
+                                    </h4>
+                                </div>
+                            </button>
+                        </h5>
+                    </div>
+
+                    <div id="ord1" class="collapse" aria-labelledby="h1" data-parent="#accordion">
+                        <div class="card-body">
+                            <div class="_dashboard_content_body py-3 px-3">
+                                <form class="row" [formGroup]="formExperience">
+                                    <div class="col-xl-12 col-lg-12">
+                                        <div class="gray rounded p-3 mb-3 position-relative">
+
+                                            <div class="form-group">
+                                                <label class="text-dark ft-medium">Entreprise</label>
+                                                <input type="text" formControlName="societe"
+                                                    class="form-control rounded" placeholder="Employer Name" required
+                                                    [ngClass]="{ 'is-invalid': submit1 && f.societe.errors }">
+
+                                                <div class="invalid-feedback" *ngIf="submit1 && f.societe.errors">
+                                                    <div *ngIf="f.societe.errors.required">Entreprise Obligatoire</div>
+                                                </div>
+                                            </div>
+
+                                            <div class="form-group">
+                                                <label class="text-dark ft-medium">Titre </label>
+                                                <input type="text" formControlName="titre" class="form-control rounded"
+                                                    placeholder=" Titre" required
+                                                    [ngClass]="{ 'is-invalid': submit1 && f.titre.errors }">
+
+                                                <div class="invalid-feedback" *ngIf="submit1 && f.titre.errors">
+                                                    <div *ngIf="f.titre.errors.required">titre de poste obligatoire
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                            <div class="form-row">
+                                                <div class="col-6">
+                                                    <div class="form-group">
+                                                        <label class="text-dark ft-medium"> Date Début</label>
+                                                        <input type="date" formControlName="date_debut"
+                                                            class="form-control rounded" placeholder="dd-mm-yyyy"
+                                                            required
+                                                            [ngClass]="{ 'is-invalid': submit1 && f.date_debut.errors }">
+
+                                                        <div class="invalid-feedback"
+                                                            *ngIf="submit1 && f.date_debut.errors">
+                                                            <div *ngIf="f.date_debut.errors.required">Date is required
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="col-6">
+                                                    <div class="form-group">
+                                                        <label class="text-dark ft-medium">Date Fin</label>
+                                                        <input type="date" formControlName="date_fin"
+                                                            class="form-control rounded" placeholder="dd-mm-yyyy"
+                                                            required
+                                                            [ngClass]="{ 'is-invalid': submit1 && f.date_fin.errors }">
+
+                                                        <div class="invalid-feedback"
+                                                            *ngIf="submit1 && f.date_fin.errors">
+                                                            <div *ngIf="f.date_fin.errors.required">Date obligatoire
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="form-group">
+                                                <label class="text-dark ft-medium">Détails</label>
+                                                <textarea class="form-control ht-80" formControlName="details"
+                                                    placeholder="description"></textarea>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-xl-12 col-lg-12">
+                                        <div class="form-group">
+                                            <!-- <button type="submit"
+                                            class="btn gray ft-medium apply-btn fs-sm rounded"><i
+                                                class="fas fa-plus mr-1"></i>Add
+                                            Experience</button> -->
+
+
+                                            <div class="col-xl-12 col-lg-12">
+                                                <div class="form-group">
+                                                    <button type="submit" (click)="ajouterExperience();updateValue()"
+                                                        class="btn-dark ft-medium apply-btn fs-sm rounded"><i
+                                                            class="fas fa-plus mr-1"></i>Ajouter Expérience</button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="card">
+                    <div class="card-header" id="h2">
+                        <h5 class="mb-0">
+                            <button class="btn btn-link collapsed" data-toggle="collapse" data-target="#ord2"
+                                aria-expanded="false" aria-controls="ord2">
+                                <div class="_dashboard__header_flex">
+                                    <h4 class="mb-0 ft-medium fs-md"><i
+                                            class="fas fa-graduation-cap mr-1 theme-cl fs-sm"></i>Compétences
+                                    </h4>
+                                </div>
+
+                            </button>
+                        </h5>
+                    </div>
+                    <div id="ord2" class="collapse" aria-labelledby="h2" data-parent="#accordion">
+                        <div class="card-body">
+                            <div class="_dashboard_content_body py-3 px-3">
+                                <form class="row" [formGroup]="formCompetence">
+                                    <div class="col-xl-12 col-lg-12">
+                                        <div class="gray rounded p-3 mb-3 position-relative">
+
+
+                                            <div class="form-group">
+                                                <label class="text-dark ft-medium">Nom</label>
+                                                <input type="text" class="form-control rounded" formControlName="titre"
+                                                    placeholder="nom" required
+                                                    [ngClass]="{ 'is-invalid': submit3 && f1.titre.errors }">
+
+                                                <div class="invalid-feedback" *ngIf="submit3 && f1.titre.errors">
+                                                    <div *ngIf="f1.titre.errors.required">compétence obligatoire</div>
+                                                </div>
+                                            </div>
+
+                                            <div class="form-group">
+                                                <label class="text-dark ft-medium">Niveau</label>
+                                                <select class="form-control rounded" formControlName="niveau" required
+                                                    [ngClass]="{ 'is-invalid': submit3 && f1.niveau.errors }">
+
+
+                                                    <option value="Débutant">Débutant</option>
+                                                    <option value="Intermédiaire">Intermédiaire</option>
+                                                    <option value="Avancé">Avancé</option>
+                                                </select>
+                                                <div class="invalid-feedback" *ngIf="submit3 && f1.niveau.errors">
+                                                    <div *ngIf="f1.niveau.errors.required">niveau obligatoire
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-xl-12 col-lg-12">
+                                        <div class="form-group">
+                                            <button type="submit" (click)="ajouterCompetence(); updateValue()"
+                                                class="btn-dark ft-medium apply-btn fs-sm rounded"><i
+                                                    class="fas fa-plus mr-1"></i>Ajouter Compétence</button>
+                                        </div>
+                                    </div>
+
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="card">
+                    <div class="card-header" id="h3">
+                        <h5 class="mb-0">
+                            <button class="btn btn-link collapsed" data-toggle="collapse" data-target="#ord3"
+                                aria-expanded="false" aria-controls="ord3">
+                                <div class="_dashboard__header_flex">
+                                    <h4 class="mb-0 ft-medium fs-md"><i
+                                            class="fas fa-university mr-1 theme-cl fs-sm"></i>Formations</h4>
+                                </div>
+                            </button>
+                        </h5>
+                    </div>
+                    <div id="ord3" class="collapse" aria-labelledby="h3" data-parent="#accordion">
+                        <div class="card-body">
+                            <div class="_dashboard_content_body py-3 px-3">
+                                <form class="row" [formGroup]="formEducation">
+                                    <div class="col-xl-12 col-lg-12">
+                                        <div class="gray rounded p-3 mb-3 position-relative">
+
+                                            <div class="form-group">
+                                                <label class="text-dark ft-medium">Nom ecole</label>
+                                                <input type="text" class="form-control rounded"
+                                                    formControlName="nom_ecole" placeholder="nom ecole" required
+                                                    [ngClass]="{ 'is-invalid': submit2 && f2.nom_ecole.errors }">
+
+                                                <div class="invalid-feedback" *ngIf="submit2 && f2.nom_ecole.errors">
+                                                    <div *ngIf="f2.nom_ecole.errors.required">nom ecole obligatoire
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="form-group">
+                                                <label class="text-dark ft-medium">Titre</label>
+                                                <input type="text" class="form-control rounded"
+                                                    formControlName="titre_diplome" placeholder=" Title" required
+                                                    [ngClass]="{ 'is-invalid': submit2 && f2.titre_diplome.errors }">
+
+                                                <div class="invalid-feedback"
+                                                    *ngIf="submit2 && f2.titre_diplome.errors">
+                                                    <div *ngIf="f2.titre_diplome.errors.required">Titre obligatoire
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="form-row">
+                                                <div class="col-6">
+                                                    <div class="form-group">
+                                                        <label class="text-dark ft-medium">Date Début</label>
+                                                        <input type="date" class="form-control rounded"
+                                                            formControlName="date_debut" placeholder="dd-mm-yyyy"
+                                                            required
+                                                            [ngClass]="{ 'is-invalid': submit2 && f2.date_debut.errors }">
+
+                                                        <div class="invalid-feedback"
+                                                            *ngIf="submit2 && f2.date_debut.errors">
+                                                            <div *ngIf="f2.date_debut.errors.required">date début
+                                                                obligatoire
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="col-6">
+                                                    <div class="form-group">
+                                                        <label class="text-dark ft-medium">Date Fin</label>
+                                                        <input type="date" class="form-control rounded"
+                                                            formControlName="date_fin" placeholder="dd-mm-yyyy" required
+                                                            [ngClass]="{ 'is-invalid': submit2 && f2.date_fin.errors }">
+
+                                                        <div class="invalid-feedback"
+                                                            *ngIf="submit2 && f2.date_fin.errors">
+                                                            <div *ngIf="f2.date_fin.errors.required">date fin
+                                                                obligatoire
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="form-group">
+                                                <label class="text-dark ft-medium">Détails</label>
+                                                <textarea class="form-control ht-80" formControlName="details"
+                                                    placeholder="description"></textarea>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-xl-12 col-lg-12">
+                                        <div class="form-group">
+                                            <button type="submit" (click)="addeducation();updateValue()"
+                                                class="btn-dark ft-medium apply-btn fs-sm rounded"><i
+                                                    class="fas fa-plus mr-1"></i>Ajouter Formation</button>
+                                        </div>
+                                    </div>
+
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="card">
+                    <div class="card-header" id="h3">
+                        <h5 class="mb-0">
+                            <button class="btn btn-link collapsed" data-toggle="collapse" data-target="#ord4"
+                                aria-expanded="false" aria-controls="ord3">
+                                <div class="_dashboard__header_flex">
+                                    <h4 class="mb-0 ft-medium fs-md"><i
+                                            class="fas fa-language mr-1 theme-cl fs-sm"></i>Langues
+                                    </h4>
+                                </div>
+                            </button>
+                        </h5>
+                    </div>
+                    <div id="ord4" class="collapse" aria-labelledby="h3" data-parent="#accordion">
+                        <div class="card-body">
+                            <div class="_dashboard_content_body py-3 px-3">
+
+                                <form class="row" [formGroup]="formlangue">
+                                    <div class="col-xl-12 col-lg-12">
+                                        <div class="gray rounded p-3 mb-3 position-relative">
+
+                                            <div class="form-group">
+                                                <label class="text-dark ft-medium">Nom</label>
+                                                <input type="text" class="form-control rounded"
+                                                    formControlName="name_langue" placeholder="nom" required
+                                                    [ngClass]="{ 'is-invalid': submit4 && f3.name_langue.errors }">
+
+                                                <div class="invalid-feedback" *ngIf="submit4 && f3.name_langue.errors">
+                                                    <div *ngIf="f3.name_langue.errors.required"> nom obligatoire
+
+                                                    </div>
+                                                </div>
+                                            </div>
+
+                                            <div class="form-group">
+                                                <label class="text-dark ft-medium">Niveau </label>
+                                                <select class="form-control rounded" formControlName="niveau"
+                                                    [ngClass]="{ 'is-invalid': submit4 && f3.niveau.errors }">
+
+
+                                                    <option value="Débutant">Débutant</option>
+                                                    <option value="Intermédiaire">Intermédiaire</option>
+                                                    <option value="Avancé">Avancé</option>
+                                                </select>
+                                                <div class="invalid-feedback" *ngIf="submit4 && f3.niveau.errors">
+                                                    <div *ngIf="f3.niveau.errors.required">niveau obligatoire</div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-xl-12 col-lg-12">
+                                        <div class="form-group">
+                                            <button type="submit" (click)="addlangue();updateValue()"
+                                                class="btn-dark ft-medium apply-btn fs-sm rounded"><i
+                                                    class="fas fa-plus mr-1"></i>Ajouter langue</button>
+                                        </div>
+                                    </div>
+
+                                </form>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+
+
+
+    </div>
+</div>
+
+
+
+
+
+
+
+
+<div class="progress" style="height:30px">
+    <div ngClass="progress-bar progress-bar-striped bg-success" [ngStyle]="{width: percentagevalue+'%'}"
+        role="progressbar" style="width: 25%;height: 30px;" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100">
+        {{percentagevalue}}%</div>
+</div>
+
+
+
+<div class="container">
+
+    <div class="row justify-content-center">
+        <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12">
+            <div class="sec_title position-relative text-center mb-4">
+                <h1 class="ft-bold mb-0 ">Télécharger cv</h1>
+                <h3 class="ft-medium pt-1 mb-3"></h3>
+            </div>
+        </div>
+    </div>
+
+    <div class="row align-items-center justify-content-between">
+        <div class=" col-md-12 col-sm-12">
+
+            <div class="d-block position-relative border rounded py-3 px-3 mb-4 bg-whites">
+                <h4 class="ft-medium">upload Resume: </h4>
+
+                <div id="accordion" class="accordion">
+                    <div class="card">
+                        <div class="card-header" id="h1">
+                            <h5 class="mb-0">
+                                <button class="btn btn-link collapsed" data-toggle="collapse" data-target="#ord5"
+                                    aria-expanded="false" aria-controls="ord5">
+                                    Choose a Resume File Name :
+                                </button>
+                            </h5>
+                        </div>
+
+                        <div id="ord5" class="collapse" aria-labelledby="h1" data-parent="#accordion">
+                            <div class="card-body">
+
+
+                                <div class="_dashboard_content_body py-3 px-3">
+
+
+                                    <form enctype="multipart/form-data" [formGroup]="formfile">
+                                        <div class="text-center">
+
+                                            <input type="file" formControlName="file" id="avatar" name="avatar"
+                                                accept="image/jpeg,image/gif,image/png,application/pdf,image/x-eps"
+                                                (change)="onFileSelected($event)">
+
+                                        </div>
+                                    </form>
+                                    <form [formGroup]="formLogo">
+                                        <input type="hidden" formControlName="type">
+                                        <input type="hidden" formControlName="token">
+                                        <input type="hidden" formControlName="url">
+
+                                        <button type="submit" class="btn-success" (click)="uploadcv()">
+                                            Upload
+                                        </button>
+
+
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+
+
+
+
+                    </div>
+                </div>
+            </div>

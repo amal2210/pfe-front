@@ -1,0 +1,195 @@
+ <div class="row">
+        <div class="colxl-12 col-lg-12 col-md-12">
+            <h1 class="ft-medium post-job">Poster Nouvelle offre </h1>  
+        </div>
+    </div>
+
+<div class="dashboard-widg-bar d-block">
+    <div class="row">
+        <div class="col-xl-12 col-lg-12 col-md-12">
+            <div class="_dashboard_content bg-white  mb-4">
+                
+
+                <div class="_dashboard_content_body py-3 px-3">
+                    <form [formGroup]="FormOffre">
+
+                        <div class="row">
+
+                            <div class="col-xl-6 col-lg-6 col-md-6">
+                                <div class="form-group">
+                                    <label class="text-dark ft-medium">Titre offre
+                                    </label>
+                                    <input type="text" class="form-control " placeholder="Titre" formControlName="titre"
+                                        [ngClass]="{ 'is-invalid': submit&& f1.titre.errors }">
+
+                                    <div class="invalid-feedback" *ngIf="submit && f1.titre.errors">
+                                        <div *ngIf="f1.titre.errors.required">Titre offre obligatoire</div>
+
+
+
+                                    </div>
+                                </div>
+
+                            </div>
+
+                            <div class="col-xl-6 col-lg-6 col-md-6">
+                                <div class="form-group">
+                                    <label class="text-dark ft-medium">Prix
+                                    </label>
+                                    <input type="number" class="form-control" formControlName="prix" placeholder="TND / jour"
+                                        [ngClass]="{ 'is-invalid': submit&& f1.prix.errors }">
+                                    <div class="invalid-feedback" *ngIf="submit && f1.prix.errors">
+                                        <div *ngIf="f1.prix.errors.required">Prix obligatoire </div>
+
+
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-xl-4  col-lg-6 col-md-6">
+                                <div class="form-group">
+                                    <label class="text-dark ft-medium">Spécialité</label>
+                                    <input type="text" class="form-control" formControlName="specialite"
+                                        placeholder="spécialité"
+                                        [ngClass]="{ 'is-invalid': submit&& f1.specialite.errors }">
+
+                                    <div class="invalid-feedback" *ngIf="submit && f1.specialite.errors">
+                                        <div *ngIf="f1.specialite.errors.required">Spécialité obligatoire</div>
+                                        
+
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="col-xl-4">
+                                <div class="form-group">
+                                    <label class="text-dark ft-medium">Catégorie</label>
+                                    <select class="custom-select rounded" formControlName="category"
+                                        [ngClass]="{ 'is-invalid': submit&& f1.category.errors }">
+                                        
+                                        <option *ngFor="let c of catgories" [value]="c.id"> {{c.nom_categorie}}
+                                        </option>
+
+                                    </select>
+                                   
+                                    <div class="invalid-feedback" *ngIf="submit && f1.category.errors">
+                                        <div *ngIf="f1.category.errors.required">Catégorie obligatoire</div>
+
+
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-xl-4">
+                                <div class="form-group">
+                                    <label class="text-dark ft-medium">Date d'expiration
+                                    </label>
+                                    <input type="date" min="{{date}}" class="form-control " formControlName="date_limite"
+                                        placeholder="dd-mm-yyyy"
+                                        [ngClass]="{ 'is-invalid': submit&& f1.date_limite.errors }">
+
+                                    <div class="invalid-feedback" *ngIf="submit && f1.date_limite.errors">
+                                        <div *ngIf="f1.date_limite.errors.required">Date d'expiration obligatoire</div>
+
+
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+
+
+                            <div class="col-xl-6 col-lg-6 col-md-6">
+                                <div class="form-group">
+                                    <label class="text-dark ft-medium">Expérience</label>
+
+                                    <input class="form-control" formControlName="experience_offre"
+                                        [ngClass]="{ 'is-invalid': submit&& f1.experience_offre.errors }">
+                                    <div class="invalid-feedback" *ngIf="submit && f1.experience_offre.errors">
+                                        <div *ngIf="f1.experience_offre.errors.required">Expérience Expérience
+                                        </div>
+                                        <div *ngIf="f1.experience_offre.errors['pattern']">saisir un chiffre
+
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </div>
+                            <div class="col-xl-6 col-lg-6 col-md-6">
+                                <div class="form-group ">
+
+                                    <label for="select" class="text-dark ft-medium">Choisir une compétence :</label>
+
+                                    <ng-select class="custom-select rounded" formControlName="skills"
+                                        placeholder="Choose Skills" id="select1" [items]="skills"
+                                        bindLabel="skills_name" bindValue="id" [multiple]="true"
+                                        placeholder=" plusieurs options sont possibles " [(ngModel)]="selectedCityIds"
+                                        [ngClass]="{ 'is-invalid': submit&& f1.skills.errors }">
+
+
+
+                                    </ng-select>
+                                    <div class="invalid-feedback" *ngIf="submit && f1.skills.errors">
+                                    <div *ngIf="f1.skills.errors.required">Compétence obligatoire
+                                    </div>
+
+
+                                </div>
+
+
+
+                                    <!-- <select id="select" multiple="multiple" formControlName="skills"
+                                            [ngClass]="{ 'is-invalid': submit&& f1.skills.errors }">
+                                            <option *ngFor="let s of skill.skills" [value]="s.id">{{s.skills_name}}
+                                            </option>
+
+                                        </select> -->
+
+
+
+
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                        <div class="col-xl-12 col-lg-12 col-md-12">
+                            <div class="form-group">
+                                <label class="text-dark ft-medium">
+                                    Description offre</label>
+                                <textarea class="form-control " placeholder="détail d'une offre ..."
+                                    formControlName="description_offre"
+                                    [ngClass]="{ 'is-invalid': submit&& f1.description_offre.errors }"> </textarea>
+
+                                <div class="invalid-feedback" *ngIf="submit && f1.description_offre.errors">
+                                    <div *ngIf="f1.description_offre.errors.required">Description obligatoire
+                                    </div>
+
+
+                                </div>
+                            </div>
+                        </div>
+</div>
+
+
+
+                        <!-- (onSelect)="onItemSelect($event)"
+                (onSelectAll)="onSelectAll($event)" -->
+
+
+
+
+                        <div class="col-12">
+                            <div class="form-group">
+                                <button type="submit" (click)="addjob()"
+                                    class="btn btn-md ft-medium text-light  theme-bg">
+                                    Valider </button>
+                            </div>
+                        </div>
+
+
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>

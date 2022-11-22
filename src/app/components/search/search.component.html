@@ -1,0 +1,397 @@
+<div class="py-5 theme-bg" data-overlay="0">
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-xl-8 col-lg-10 col-md-12 col-sm-12 col-12">
+                <div class="banner_caption text-center mb-2">
+                    <h1 class="ft-bold mb-4">Chercher des Offres</h1>
+                </div>
+                <div class="bg-white rounded p-0.5">
+                    <div class="row no-gutters">
+                        <div class="col-xl-5 col-lg-6 col-md-5 col-sm-12 col-12">
+                            <div class="form-group mb-0 position-relative">
+                                <input type="text" class="form-control lg left-ico" placeholder="Titre offre"
+                                    [(ngModel)]="title"  oninput="validity.valid||(value='');">
+                                <i class="bnc-ico lni lni-search-alt"></i>
+                            </div>
+                        </div>
+                        <div class="col-xl-5 col-lg-6 col-md-5 col-sm-12 col-12">
+                            <div class="form-group mb-0 position-relative">
+                                <input type="text" class="form-control lg left-ico" placeholder="Adresse"
+                                    [(ngModel)]="location" >
+                                <i class="bnc-ico lni lni-target"  ></i>
+                            </div>
+                        </div>
+                        <div class="col-xl-2 ">
+                            <div class="form-group mb-0 position-relative">
+                                <button class="btn full-width custom-height-lg bg-dark text-white fs-md" type="button"
+                                    (click)="getoffrefilterbylocationtitle()">Trouver</button>
+                            </div>
+
+                        </div>
+
+
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>
+<section class="bg-white">
+    <div class="container">
+        <div class="row">
+
+            <div class="col-lg-4 col-md-12 col-sm-12">
+                <div class="bg-light rounded">
+
+                    <div class="sidebar_header d-flex align-items-center justify-content-between px-4 py-3 br-bottom">
+                        <h4 class="ft-medium fs-lg mb-0"> Filtrer</h4>
+                        <div class="ssh-header">
+                            <a href="javascript:void(0);" class="clear_all ft-medium text-muted"> toutes les offres</a>
+                            <a data-toggle="collapse" aria-expanded="false" type="button"
+                                class="collapsed _filter-ico ml-2"><i class="lni lni-text-align-right"></i></a>
+                        </div>
+                    </div>
+
+                    <!-- Find New Property -->
+                    <div class="sidebar-widgets collapse miz_show" id="search_open" data-parent="#search_open">
+
+                        <div class="search-inner">
+
+                            <div class="filter-search-box px-4 pt-3 pb-0">
+                                <div class="form-group">
+                                    <input type="text" class="form-control" placeholder="chercher par mots clés..."
+                                        [(ngModel)]="expe">
+                                </div>
+                                <div class="form-group">
+                                    <input [(ngModel)]="term1" type="text" class="form-control"
+                                        placeholder="Adresse, titre offre">
+                                </div>
+
+                            </div>
+
+                            <div class="filter_wraps">
+
+                                <!-- Job categories Search -->
+
+
+                                <div class="single_search_boxed px-4 pt-0 br-bottom">
+                                    <div class="widget-boxed-header">
+                                        <h4>
+                                            <a href="#categories" data-toggle="collapse" aria-expanded="false"
+                                                role="button" class="ft-medium fs-md pb-0 collapsed">Filter par
+                                                catégorie</a>
+                                        </h4>
+
+                                    </div>
+                                    <div class="widget-boxed-body collapse" id="categories" data-parent="#categories">
+                                        <div class="side-list no-border">
+                                            <!-- Single Filter Card -->
+                                            <div class="single_filter_card">
+                                                <div class="card-body p-0">
+                                                    <div class="inner_widget_link">
+                                                        <ul class="no-ul-list filter-list">
+                                                            <li *ngFor="let c of catgories">
+                                                                <input id="a1" class="form-check-input" name="ADA"
+                                                                    type="checkbox" [value]="c.id"
+                                                                    (change)="getoffrebycategorie($event)">
+                                                                <label for="a1" class="form-check-label">
+                                                                    {{c.nom_categorie}} </label>
+                                                            </li>
+
+
+
+                                                        </ul>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="single_search_boxed px-4 pt-0 br-bottom">
+                                    <div class="widget-boxed-header">
+                                        <h4>
+                                            <a href="#skills" data-toggle="collapse" aria-expanded="false" role="button"
+                                                class="ft-medium fs-md pb-0 collapsed">Filter par
+                                                compétence</a>
+                                        </h4>
+
+                                    </div>
+                                    <div class="widget-boxed-body collapse" id="skills" data-parent="#skills">
+
+                                        <div class="side-list no-border">
+                                            <!-- Single Filter Card -->
+                                            <div class="single_filter_card">
+                                                <div class="card-body p-0">
+                                                    <div class="inner_widget_link">
+                                                        <ul class="no-ul-list filter-list">
+
+                                                            <li *ngFor="let s of skill">
+                                                                <input id="c11" class="form-check-input" name="ADA"
+                                                                    type="checkbox" [value]="s.id"
+                                                                    (change)="byskill($event)">
+                                                                <label for="c11" class="form-check-label">
+                                                                    {{s.skills_name}} </label>
+                                                            </li>
+
+                                                        </ul>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <form [formGroup]="formfilter">
+                                    <!-- Experience Search -->
+                                    <div class="single_search_boxed px-4 pt-0 br-bottom">
+                                        <div class="widget-boxed-header">
+                                            <h4>
+                                                <a href="#experience" data-toggle="collapse" aria-expanded="false"
+                                                    role="button" class="ft-medium fs-md pb-0 collapsed">Filtrer par
+                                                    Expérience</a>
+                                            </h4>
+
+                                        </div>
+                                        <div class="widget-boxed-body collapse" id="experience"
+                                            data-parent="#experience">
+                                            <div class="side-list no-border">
+                                                <!-- Single Filter Card -->
+                                                <div class="single_filter_card">
+                                                    <div class="card-body p-0">
+                                                        <div class="inner_widget_link">
+                                                            <div class="filter-search-box px-1 pt-3 pb-0 row">
+
+
+
+
+
+                                                                <div class="col-6">
+                                                                    <input class="form-control"
+                                                                        formControlName="minexperience"
+                                                                        oninput="validity.valid||(value='');" min="0"
+                                                                        max="12" type="number">
+                                                                </div>
+                                                                <div class="col-6">
+
+                                                                    <input class="form-control"
+                                                                        formControlName="maxexperience" type="number" oninput="validity.valid||(value='');">
+                                                                </div>
+
+
+
+
+
+
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+
+
+                                    <!-- Job Level Search -->
+                                    <div class="single_search_boxed px-4 pt-0 br-bottom ">
+                                        <div class="widget-boxed-header ">
+                                            <h4>
+                                                <a href="#jblevel" data-toggle="collapse" aria-expanded="false"
+                                                    role="button" class="ft-medium fs-md pb-0 collapsed">Filtrer par
+                                                    prix
+                                                </a>
+                                            </h4>
+
+                                        </div>
+                                        <div class="widget-boxed-body collapse" id="jblevel" data-parent="#jblevel">
+                                            <div class="side-list no-border">
+                                                <!-- Single Filter Card -->
+                                                <div class="single_filter_card">
+                                                    <div class="card-body p-0">
+                                                        <div class="inner_widget_link">
+                                                            <ul class="no-ul-list filter-list">
+
+
+
+
+                                                                <div class="filter-search-box px-1 pt-3 pb-0 row">
+
+
+                                                                    <div class="col-6">
+                                                                        <input class="form-control"
+                                                                            formControlName="minprix" type="number" oninput="validity.valid||(value='');">
+                                                                    </div>
+                                                                    <div class="col-6">
+
+                                                                        <input class="form-control"
+                                                                            formControlName="maxprix" type="number" oninput="validity.valid||(value='');">
+                                                                    </div>
+
+
+
+                                                                </div>
+
+
+
+                                                            </ul>
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+
+
+                                            </div>
+
+
+                                        </div>
+                                    </div>
+
+                                    <div class="row">
+                                        <div class="col-xl-6">
+                                            <div class="form-group filter_button pt-2 pb-4 px-4">
+                                                <button type="submit" (click)="filter()"
+                                                    class="btn btn-md theme-bg text-light rounded full-width">Filtrer</button>
+                                            </div>
+                                        </div>
+                                        <div class="col-xl-6">
+                                            <div class="form-group filter_button pt-2 pb-4 px-4">
+                                                <button type="button"
+                                                    class="btn btn-md full-width bg-dark text-light rounded">vider</button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+
+
+                        </div>
+
+
+                    </div>
+                </div>
+                <!-- Sidebar End -->
+
+            </div>
+
+            <!-- Item Wrap Start -->
+            <div class="col-lg-8 col-md-12 col-sm-12">
+
+
+
+                <!-- All jobs -->
+                <div class="container">
+                    <div class="row">
+                        <div class="row align-items-center">
+                            <div *ngIf="messageoffre==true">
+                                <div class="alert alert-danger text-center" role="alert">
+                                    Désolé, nous n'avons actuellement aucun emploi pour cette recherche. Essayez une
+                                    autre
+                                </div>
+                            </div>
+
+                            <div class=" col-xl-4 col-lg-6 col-md-6 col-sm-12"
+                                *ngFor="let offre of offres | filter:term1| filter :byexper| paginate: { itemsPerPage: 6, currentPage: p }">
+                                <div class="job_grid border rounded  bg-white">
+                                    <div class="position-absolute ab-left" *ngIf="offre.favoris==true">
+
+                                        <a (click)="addfavoris(offre.id,token)"
+                                            class="p-3 border circle d-flex align-items-center justify-content-center bg-whites text-gray">
+                                            <i class="lni lni-heart-filled position-absolute snackbar-wishlist"
+                                                id="favoris"></i></a>
+                                    </div>
+                                    <div class="position-absolute ab-left" *ngIf="offre.favoris==false">
+
+                                        <a (click)="addfavoris(offre.id,token)"
+                                            class="p-3 border circle d-flex align-items-center justify-content-center bg-whites text-gray">
+                                            <i class="lni lni-heart position-absolute snackbar-wishlist"></i></a>
+                                    </div>
+
+
+                                    <div class="position-absolute ab-right">
+                                        <span class="medium bg-light-danger text-danger px-2 py-1 rounded">
+                                            {{offre.date_limite}} </span>
+                                    </div>
+                                    <div class="job_grid_thumb mb-3 pt-5 px-3">
+                                        <a class="d-block text-center m-auto">
+                                            <img src="https://127.0.0.1:8000/uploads/{{offre.entreprise.logo}}"
+                                                class="img-fluid" style="width:80px;height:80px" alt=""></a>
+                                    </div>
+
+
+                                    <div class="job_grid_caption text-center pb-5 px-3">
+
+                                        <h4 class="mb-0 ft-medium medium"><a [routerLink]="['/detailjob',offre.id]"
+                                                class="text-dark fs-md">{{offre.titre}}</a></h4>
+                                        <div class="jbl_location"><i
+                                                class="lni lni-map-marker mr-1"></i><span>{{offre.entreprise.adresse}}</span><br>
+
+                                        </div>
+
+                                        <div
+                                            class="job_grid_footer pt-2 pb-4 px-3 d-flex align-items-center justify-content-between">
+                                            <div class="row">
+                                                <div class="df-1 text-muted col-12 "><i
+                                                        class="lni lni-briefcase mr-1"></i>{{offre.experience_offre}}
+                                                    ANS
+
+                                                </div>
+                                                <div class="df-1 text-muted col-12 "><i
+                                                        class="lni lni-wallet mr-1"></i>{{offre.prix}}TND </div>
+
+                                                <div class="df-1 text-muted col-12 text-left">
+                                                    <i class="lni lni-timer ">
+                                                    </i>publié le:{{offre.date_creation}}
+                                                </div>
+
+                                                <div class="job_grid_footer pb-4 py-2 px-2 text-dark">
+                                                    <ul class="p-0 skills_tag text-center">
+
+                                                        <li *ngFor="let o of offre.skills">
+                                                            <span
+                                                                class="px-2 py-1 medium skill-bg rounded text-dark">{{o.skills_name}}</span>
+                                                        </li>
+
+                                                    </ul>
+                                                </div>
+
+
+                                            </div>
+
+
+                                        </div>
+
+
+
+                                    </div>
+
+
+
+
+
+
+
+                                </div>
+                            </div>
+
+                        </div>
+
+
+
+
+                        <div class="col-lg-12 col-md-12 text-center">
+                            <div class="pagination-area page-numbers">
+                                <pagination-controls (pageChange)="p = $event"></pagination-controls>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+
+
+
+            </div>
+
+        </div>
+    </div>
+</section>
